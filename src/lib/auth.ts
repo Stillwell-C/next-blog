@@ -35,13 +35,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           //Check for user in db
           const existingUser = await prisma.user.findFirst({
-            where: { oAuthProviderId: profile.id?.toString() as string },
+            where: { oAuthProviderId: profile.id },
           });
 
           //If exists, reassign Oauth ID to DB ID & assign username
           if (existingUser !== null) {
             user.id = existingUser.id;
-            user.name = existingUser.username;
+            user.username = existingUser.username;
+            user.imgUrl = existingUser.imgURL;
           }
 
           //If no user exists, create new one
