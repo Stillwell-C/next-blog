@@ -1,21 +1,13 @@
 "use client";
 
 import { useFormState } from "react-dom";
-import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { credentialsLogin, handleGitHubLogin } from "@/app/lib/actions";
-import FormStatusButton from "@/app/components/FormStatusSubmitButton";
+import { credentialsLogin, handleGitHubLogin } from "@/lib/actions";
+import FormStatusButton from "@/components/FormStatusSubmitButton";
+import FormStateError from "@/components/FormStateError";
 
 const LoginForm = () => {
-  const errorRef = useRef<HTMLParagraphElement>(null);
-
   const [state, formAction] = useFormState(credentialsLogin, null);
-
-  useEffect(() => {
-    if (state?.error) {
-      errorRef?.current?.focus();
-    }
-  }, [state]);
 
   return (
     <section className='p-5 flex flex-col border gap-4 border-solid border-black rounded-md'>
@@ -46,11 +38,7 @@ const LoginForm = () => {
           />
         </div>
         <FormStatusButton buttonText='로그인' />
-        {state?.error && (
-          <p ref={errorRef} className='text-red-500 text-center'>
-            {state?.errorMsg}
-          </p>
-        )}
+        <FormStateError formState={state} />
       </form>
       <Link
         href='/register'

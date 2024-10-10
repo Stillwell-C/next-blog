@@ -1,23 +1,17 @@
 "use client";
 
-import { handleGitHubLogin, registerUser } from "@/app/lib/actions";
+import { handleGitHubLogin, registerUser } from "@/lib/actions";
 import { useFormState } from "react-dom";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import FormStatusButton from "@/app/components/FormStatusSubmitButton";
+import FormStatusButton from "@/components/FormStatusSubmitButton";
+import FormStateError from "@/components/FormStateError";
 
 const RegisterForm = () => {
-  const errorRef = useRef<HTMLParagraphElement>(null);
   const router = useRouter();
 
   const [state, formAction] = useFormState(registerUser, null);
-
-  useEffect(() => {
-    if (state?.error) {
-      errorRef?.current?.focus();
-    }
-  }, [state]);
 
   useEffect(() => {
     if (state?.success) {
@@ -66,11 +60,7 @@ const RegisterForm = () => {
           />
         </div>
         <FormStatusButton buttonText='회원가입' />
-        {state?.error && (
-          <p ref={errorRef} className='text-red-500 text-center'>
-            {state?.errorMsg}
-          </p>
-        )}
+        <FormStateError formState={state} />
       </form>
       <Link
         href='/login'
