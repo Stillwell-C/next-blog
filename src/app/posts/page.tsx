@@ -10,7 +10,7 @@ type Props = {
 
 const PostsPage = async ({ searchParams }: Props) => {
   const page = searchParams?.page ? parseInt(searchParams?.page) : 1;
-  const postData = await getPosts(page);
+  const postData = await getPosts({ page });
 
   return (
     <div className='mx-auto max-w-3xl h-full flex flex-col items-center'>
