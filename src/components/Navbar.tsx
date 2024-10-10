@@ -5,7 +5,7 @@ import { handleLogout } from "../lib/actions";
 const Navbar = async () => {
   const session = await auth();
 
-  //console.log(session);
+  console.log(session);
 
   const signInButton = <Link href='/login'>로그인</Link>;
   const signOutButton = (
