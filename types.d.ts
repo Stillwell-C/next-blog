@@ -21,3 +21,14 @@ interface PostFormStateType {
   content: string[];
   authorId: string;
 }
+
+type QueriedPostType = {
+  id: string;
+  title: string;
+  subTitle?: string | null;
+  content?: string[];
+  authorId: string;
+  author?: { username: string };
+  createdAt: Date;
+  updatedAt: Date;
+};
