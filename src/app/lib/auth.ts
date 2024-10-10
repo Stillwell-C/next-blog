@@ -16,7 +16,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           if (!user) {
             return null;
           }
-
           return user;
         } catch (err) {
           return null;
