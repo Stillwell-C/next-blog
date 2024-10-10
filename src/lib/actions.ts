@@ -150,7 +150,11 @@ export const createPost = async (
   }
 };
 
-export const getPosts = async (page = 1, take = 10) => {
+export const getPosts = async ({
+  page = 1,
+  take = 10,
+  retrieveContent = false,
+}) => {
   const skip = page * take - take;
 
   try {
@@ -159,7 +163,14 @@ export const getPosts = async (page = 1, take = 10) => {
       orderBy: {
         createdAt: "desc",
       },
-      include: {
+      select: {
+        content: retrieveContent,
+        id: true,
+        title: true,
+        subTitle: true,
+        authorId: true,
+        createdAt: true,
+        updatedAt: true,
         author: {
           select: {
             username: true,
