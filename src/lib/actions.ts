@@ -122,7 +122,7 @@ export const createPost = async (
     return { error: true, errorMsg: "제목과 내용은 꼭 입력해주세요." };
   }
 
-  const parsedContent = title
+  const parsedContent = content
     .toString()
     .split("\n")
     .filter((el) => el.trim());
@@ -143,7 +143,40 @@ export const createPost = async (
         authorId: data.authorId,
       },
     });
+
+    return { success: true };
   } catch (err) {
     return { error: true, errorMsg: "에로가 발생했습니다" };
+  }
+};
+
+export const getPosts = async (page = 1, take = 10) => {
+  const skip = page * take - take;
+
+  try {
+    const postCount = await prisma.post.count();
+    const posts = await prisma.post.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        author: {
+          select: {
+            username: true,
+          },
+        },
+      },
+      take,
+      skip,
+    });
+
+    const totalPages = Math.ceil(postCount / take);
+
+    return { posts, currentPage: page, totalCount: postCount, totalPages };
+  } catch (err) {
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    }
+    throw new Error("에로가 발생했습니다");
   }
 };
