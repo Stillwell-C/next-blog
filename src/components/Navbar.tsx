@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { auth } from "@/app/lib/auth";
+import { auth } from "@/lib/auth";
 import { handleLogout } from "../lib/actions";
 
 const Navbar = async () => {
   const session = await auth();
 
-  const signInButton = <Link href='/auth/login'>Sign In</Link>;
+  //console.log(session);
+
+  const signInButton = <Link href='/login'>로그인</Link>;
   const signOutButton = (
     <form action={handleLogout}>
       <button>Sign Out</button>
@@ -15,7 +17,11 @@ const Navbar = async () => {
   return (
     <nav className='w-full flex justify-around p-8'>
       <div>links</div>
-      <div>Next Blog</div>
+      <h1>
+        <Link href={"/"} className='text-3xl'>
+          Next Blog
+        </Link>
+      </h1>
       <div>{!session ? signInButton : signOutButton}</div>
     </nav>
   );
