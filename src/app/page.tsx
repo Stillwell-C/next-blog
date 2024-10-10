@@ -1,3 +1,3 @@
 export default function Home() {
-  return <div className='flex-1 px-8'>Hello</div>;
+  return <div className='px-8'>Hello</div>;
 }
