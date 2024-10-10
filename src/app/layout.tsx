@@ -33,7 +33,7 @@ export default function RootLayout({
           <div className='flex justify-center flex-1'>
             <div className='min-h-screen max-w-7xl flex flex-col items-center flex-1'>
               <Navbar />
-              <main className='flex-1'>{children}</main>
+              <main className='flex-1 w-full'>{children}</main>
               <Footer />
             </div>
           </div>
