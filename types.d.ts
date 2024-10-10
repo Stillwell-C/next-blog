@@ -14,3 +14,10 @@ interface RegisterFormStateType extends FormStateType {
   password?: string;
   passwordConfirmation?: string;
 }
+
+interface PostFormStateType {
+  title: string;
+  subTitle?: string;
+  content: string[];
+  authorId: string;
+}
