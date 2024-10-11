@@ -2,6 +2,7 @@
 
 import { getComments } from "@/lib/actions";
 import { useState } from "react";
+import PostCommentCard from "./PostCommentCard";
 
 type Props = {
   initialComments:
@@ -60,19 +61,16 @@ const PostCommentsList = ({ initialComments, postId }: Props) => {
 
   const commentDisplay = (
     <div>
-      <div>
+      <div className='flex flex-col gap-4'>
         {comments.map((comment) => (
-          <div key={comment.id}>
-            <div>{comment.content}</div>
-            <div>{comment.author.username}</div>
-          </div>
+          <PostCommentCard comment={comment} key={comment.id} />
         ))}
       </div>
       {nextPage && (
         <button
           disabled={loading}
           onClick={loadMoreComments}
-          className='disabled:cursor-not-allowed bg-black white disabled:opacity-50 text-white items-center justify-center py-2 px-8 rounded'
+          className='mt-8 disabled:cursor-not-allowed bg-black white disabled:opacity-50 text-white items-center justify-center py-2 px-8 rounded'
         >
           댓글 더 보기
         </button>
