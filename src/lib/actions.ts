@@ -300,3 +300,95 @@ export const deletePost = async (
     return { error: true, errorMsg: "에로가 발생했습니다" };
   }
 };
+
+export const createComment = async (
+  prevState: FormStateType | null,
+  formData: FormData
+) => {
+  try {
+    const { postId, authorId, content } = Object.fromEntries(formData);
+
+    if (
+      typeof postId !== "string" ||
+      typeof authorId !== "string" ||
+      typeof content !== "string"
+    ) {
+      return { error: true, errorMsg: "비정상적인 데이터가 전달되었습니다." };
+    }
+
+    if (!content?.length) {
+      return { error: true, errorMsg: "댓글을 입력해주세요." };
+    }
+
+    if (!postId) {
+      return { error: true, errorMsg: "해당 포스팅을 찾을 수 없습니다." };
+    }
+
+    if (!authorId) {
+      return { error: true, errorMsg: "댓글을 남기려면 로그인 해주세요." };
+    }
+
+    await prisma.comment.create({
+      data: {
+        postId: postId,
+        authorId: authorId,
+        content: content,
+      },
+    });
+
+    return { success: true };
+  } catch (err) {
+    if (err instanceof Error) {
+      return { error: true, errorMsg: err.message };
+    }
+    return { error: true, errorMsg: "에로가 발생했습니다" };
+  }
+};
+
+export const getComments = async ({
+  postId,
+  page = 1,
+  take = 10,
+}: {
+  postId: string;
+  page?: number;
+  take?: number;
+}) => {
+  if (typeof postId !== "string") {
+    return;
+  }
+
+  const skip = page * take - take;
+
+  try {
+    const comments = await prisma.comment.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        author: {
+          select: {
+            username: true,
+          },
+        },
+      },
+      take,
+      skip,
+    });
+    const commentCount = await prisma.comment.count();
+
+    const totalPages = Math.ceil(commentCount / take);
+
+    return {
+      comments,
+      currentPage: page,
+      totalCount: commentCount,
+      totalPages,
+    };
+  } catch (err) {
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    }
+    throw new Error("에로가 발생했습니다");
+  }
+};
