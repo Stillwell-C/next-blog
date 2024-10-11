@@ -23,12 +23,15 @@ interface PostFormStateType {
 }
 
 type QueriedPostType = {
-  id: string;
-  title: string;
-  subTitle?: string | null;
-  content?: string[];
   authorId: string;
-  author?: { username: string };
+  id: string;
   createdAt: Date;
   updatedAt: Date;
+  title: string;
+  subTitle: string | null;
+  content: string[];
+  imgUrl: string | null;
+  editorId: string | null;
+  editor?: { username: string };
+  author?: { username: string };
 };
