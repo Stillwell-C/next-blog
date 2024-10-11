@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { handleLogout } from "../lib/actions";
+import RedirectLink from "./RedirectLink";
 
 const Navbar = async () => {
   const session = await auth();
 
   console.log(session);
 
-  const signInButton = <Link href='/login'>로그인</Link>;
+  const signInButton = <RedirectLink pathname='/login' linkText='로그인' />;
   const signOutButton = (
     <form action={handleLogout}>
       <button>Sign Out</button>
