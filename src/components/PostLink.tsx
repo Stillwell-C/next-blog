@@ -1,3 +1,4 @@
+import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 
@@ -6,13 +7,7 @@ type Props = {
 };
 
 const PostLink = ({ post }: Props) => {
-  const displayDate = new Date(post?.createdAt || "").toLocaleString("sv-SE", {
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const displayDate = post?.createdAt ? formatDate(post?.createdAt) : "";
 
   return (
     <article>
