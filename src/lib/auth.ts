@@ -85,5 +85,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session;
     },
+    authorized({ auth, request }) {
+      const user = auth?.user;
+
+      const currentURL = request?.nextUrl?.pathname?.toString();
+
+      //Prevent logged in users from reaching the login or register pages
+      //Also redirects logged in users above from login to home
+      const isOnLoginPage = currentURL.startsWith("/login");
+      const isOnRegisterPage = currentURL.startsWith("/register");
+      if ((isOnLoginPage || isOnRegisterPage) && user) {
+        return Response.redirect(new URL("/", request.nextUrl));
+      }
+
+      return true;
+    },
   },
 });
