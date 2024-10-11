@@ -35,3 +35,13 @@ type QueriedPostType = {
   editor?: { username: string };
   author?: { username: string };
 };
+
+type CommentType = {
+  postId: string;
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  content: string;
+  authorId: string;
+  author: { username: string };
+};
