@@ -15,7 +15,8 @@ model User {
   password        String?
   role            Role      @default(USER)
   imgURL          String?
-  posts           Post[]
+  authoredPosts   Post[]    @relation("authoredPosts")
+  editedPosts     Post[]    @relation("editedPosts")
   comments        Comment[]
 }
 
@@ -26,9 +27,12 @@ model Post {
   title     String
   subTitle  String?
   content   String[]
-  author    User      @relation(fields: [authorId], references: [id])
+  imgUrl    String?
+  author    User      @relation(fields: [authorId], references: [id], name: "authoredPosts")
   authorId  String
   comments  Comment[]
+  editorId  String?
+  editor    User?     @relation(fields: [editorId], references: [id], name: "editedPosts")
 }
 
 model Comment {
