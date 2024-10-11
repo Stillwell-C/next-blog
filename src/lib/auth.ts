@@ -35,14 +35,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           //Check for user in db
           const existingUser = await prisma.user.findFirst({
-            where: { oAuthProviderId: profile.id },
+            where: { oAuthProviderId: profile.id?.toString() },
           });
 
           //If exists, reassign Oauth ID to DB ID & assign username
           if (existingUser !== null) {
             user.id = existingUser.id;
             user.username = existingUser.username;
-            user.imgUrl = existingUser.imgURL;
+            user.imgUrl = existingUser.imgUrl;
           }
 
           //If no user exists, create new one
@@ -50,7 +50,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             const newUser = await prisma.user.create({
               data: {
                 username: profile.login as string,
-                imgURL: profile.avatar_url as string,
+                imgUrl: profile.avatar_url as string,
                 oAuthProviderId: profile.id?.toString() as string,
               },
             });
