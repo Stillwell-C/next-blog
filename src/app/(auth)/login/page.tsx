@@ -5,15 +5,20 @@ import Link from "next/link";
 import { credentialsLogin, handleGitHubLogin } from "@/lib/actions";
 import FormStatusButton from "@/components/FormStatusSubmitButton";
 import FormStateError from "@/components/FormStateError";
+import { useSearchParams } from "next/navigation";
 
 const LoginForm = () => {
   const [state, formAction] = useFormState(credentialsLogin, null);
+  const searchParams = useSearchParams();
+
+  const redirectUrl = searchParams.get("redirectTo") || "";
 
   return (
     <section className='p-8'>
       <div className='mx-auto p-6 max-w-xl flex flex-col border gap-4 border-solid border-black rounded-md'>
         <h2 className='text-center text-2xl bold'>로그인</h2>
         <form action={formAction} className='flex flex-col gap-4'>
+          <input name='redirectUrl' value={redirectUrl} hidden readOnly />
           <div className='flex flex-col'>
             <label htmlFor='username' className='ml-2 text-xs'>
               아이디:
@@ -48,6 +53,7 @@ const LoginForm = () => {
           회원가입
         </Link>
         <form action={handleGitHubLogin}>
+          <input name='redirectUrl' value={redirectUrl} hidden readOnly />
           <button className='bg-black text-white w-full p-3 rounded'>
             GitHub 로그인
           </button>
