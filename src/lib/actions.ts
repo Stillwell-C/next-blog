@@ -99,7 +99,7 @@ export const credentialsLogin = async (
       return { error: true, errorMsg: "아이디 또는 비밀번호가 맞지 않습니다" };
     }
 
-    await signIn("credentials", { ...user });
+    await signIn("credentials", { redirectTo: "/", ...user });
     return { success: true };
   } catch (err) {
     if (err instanceof CredentialsSignin) {
@@ -202,6 +202,18 @@ export const getPost = async (postId: string) => {
     const post = await prisma.post.findUnique({
       where: {
         id: postId,
+      },
+      include: {
+        author: {
+          select: {
+            username: true,
+          },
+        },
+        editor: {
+          select: {
+            username: true,
+          },
+        },
       },
     });
 
@@ -369,6 +381,7 @@ export const getComments = async ({
         author: {
           select: {
             username: true,
+            imgUrl: true,
           },
         },
       },
