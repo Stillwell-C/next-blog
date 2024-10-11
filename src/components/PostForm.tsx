@@ -2,30 +2,32 @@ import FormStateError from "./FormStateError";
 import FormStatusButton from "./FormStatusSubmitButton";
 
 type Props = {
-  title?: string;
-  subTitle?: string;
-  content?: string;
-  authorId: string;
+  authorId?: string;
+  editorId?: string;
+  post?: QueriedPostType | null;
   buttonText?: string;
   formAction: (payload: FormData) => void;
   formState: FormStateType | null;
 };
 
 const PostForm = ({
-  title,
-  subTitle,
-  content,
   authorId,
+  editorId,
+  post,
   buttonText,
   formAction,
   formState,
 }: Props) => {
+  //TODO: MAKE SURE WORKS FINE WITH DEFAULT VALUE & NO STATE FOR INPUTS
+
   return (
     <form
       action={formAction}
       className='flex flex-col gap-4 px-8 max-w-3xl mx-auto'
     >
-      <input type='text' name='authorId' value={authorId} hidden />
+      <input type='text' name='authorId' value={authorId} hidden readOnly />
+      <input type='text' name='editorId' value={editorId} hidden readOnly />
+      <input type='text' name='postId' value={post?.id} hidden readOnly />
       <div className='flex flex-col'>
         <label htmlFor='title' className='ml-2 text-xs'>
           제목:
@@ -35,7 +37,7 @@ const PostForm = ({
           placeholder='제목'
           id='title'
           name='title'
-          value={title}
+          defaultValue={post?.title}
           className='border border-black rounded-md p-4'
         />
       </div>
@@ -47,8 +49,8 @@ const PostForm = ({
           type='text'
           placeholder='부제'
           id='subTitle'
+          defaultValue={post?.subTitle || ""}
           name='subTitle'
-          value={subTitle}
           className='border border-black rounded-md p-4'
         />
       </div>
@@ -60,7 +62,7 @@ const PostForm = ({
           placeholder='내용'
           id='content'
           name='content'
-          value={content}
+          defaultValue={post?.content?.join("\n\n")}
           className='border border-black rounded-md p-4 resize-y h-44'
         ></textarea>
       </div>
