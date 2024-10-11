@@ -5,6 +5,7 @@ import { prisma } from "./prisma";
 import bcrypt from "bcryptjs";
 import { CredentialsSignin } from "next-auth";
 import { isRedirectError } from "next/dist/client/components/redirect";
+import { postContentToArray } from "./utils";
 
 export const handleGitHubLogin = async () => {
   await signIn("github");
@@ -122,10 +123,11 @@ export const createPost = async (
     return { error: true, errorMsg: "제목과 내용은 꼭 입력해주세요." };
   }
 
-  const parsedContent = content
-    .toString()
-    .split("\n")
-    .filter((el) => el.trim());
+  if (!authorId) {
+    return { error: true, errorMsg: "인증 자격 증명이 없습니다." };
+  }
+
+  const parsedContent = postContentToArray(content as string);
 
   const data: PostFormStateType = {
     title: title as string,
@@ -158,6 +160,7 @@ export const getPosts = async ({
   const skip = page * take - take;
 
   try {
+    //TODO: Remove count
     const postCount = await prisma.post.count();
     const posts = await prisma.post.findMany({
       orderBy: {
@@ -168,7 +171,9 @@ export const getPosts = async ({
         id: true,
         title: true,
         subTitle: true,
+        imgUrl: true,
         authorId: true,
+        editorId: true,
         createdAt: true,
         updatedAt: true,
         author: {
@@ -189,5 +194,109 @@ export const getPosts = async ({
       throw new Error(err.message);
     }
     throw new Error("에로가 발생했습니다");
+  }
+};
+
+export const getPost = async (postId: string) => {
+  try {
+    const post = await prisma.post.findUnique({
+      where: {
+        id: postId,
+      },
+    });
+
+    return post;
+  } catch (err) {
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    }
+    throw new Error("에로가 발생했습니다");
+  }
+};
+
+export const editPost = async (
+  prevState: FormStateType | null,
+  formData: FormData
+) => {
+  try {
+    const { postId, title, subTitle, content, editorId, imgUrl } =
+      Object.fromEntries(formData);
+
+    if (!postId) {
+      return { error: true, errorMsg: "해당 포스팅을 찾을 수 없습니다." };
+    }
+
+    if (!title || !content) {
+      return { error: true, errorMsg: "제목과 내용은 꼭 입력해주세요." };
+    }
+
+    if (!editorId) {
+      return { error: true, errorMsg: "인증 자격 증명이 없습니다." };
+    }
+
+    const parsedContent = postContentToArray(content as string);
+
+    const data = {
+      id: postId as string,
+      title: title as string,
+      subTitle: subTitle as string,
+      content: parsedContent,
+      editorId: editorId as string,
+      imgUrl: imgUrl as string,
+    };
+
+    await prisma.post.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        editorId: data.editorId,
+        title: data.title,
+        subTitle: data.subTitle,
+        content: data.content,
+        imgUrl: data.imgUrl,
+      },
+    });
+
+    return { success: true };
+  } catch (err) {
+    if (err instanceof Error) {
+      return { error: true, errorMsg: err.message };
+    }
+    return { error: true, errorMsg: "에로가 발생했습니다" };
+  }
+};
+
+export const deletePost = async (
+  prevState: FormStateType | null,
+  formData: FormData
+) => {
+  try {
+    const { postId, editorId } = Object.fromEntries(formData);
+
+    if (!postId) {
+      return { error: true, errorMsg: "해당 포스팅을 찾을 수 없습니다." };
+    }
+
+    if (!editorId) {
+      return { error: true, errorMsg: "인증 자격 증명이 없습니다." };
+    }
+
+    const data = {
+      id: postId as string,
+    };
+
+    await prisma.post.delete({
+      where: {
+        id: data.id,
+      },
+    });
+
+    return { success: true };
+  } catch (err) {
+    if (err instanceof Error) {
+      return { error: true, errorMsg: err.message };
+    }
+    return { error: true, errorMsg: "에로가 발생했습니다" };
   }
 };
