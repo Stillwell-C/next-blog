@@ -4,9 +4,13 @@ import { ClipLoader } from "react-spinners";
 
 type Props = {
   buttonText?: string;
+  dangerColor?: boolean;
 };
 
-const FormStatusButton = ({ buttonText = "Submit" }: Props) => {
+const FormStatusButton = ({
+  buttonText = "Submit",
+  dangerColor = false,
+}: Props) => {
   const { pending } = useFormStatus();
 
   const buttonContent = pending ? (
@@ -19,7 +23,9 @@ const FormStatusButton = ({ buttonText = "Submit" }: Props) => {
     <button
       type='submit'
       disabled={pending}
-      className='disabled:cursor-not-allowed bg-black white text-white items-center justify-center py-2 px-8 rounded min-w-28 min-h-11'
+      className={`disabled:cursor-not-allowed bg-black white text-white items-center justify-center py-2 px-8 rounded min-w-28 min-h-11 ${
+        dangerColor ? "bg-red-500" : ""
+      }`}
     >
       {buttonContent}
     </button>
