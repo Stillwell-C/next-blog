@@ -22,19 +22,26 @@ interface PostFormStateType {
   authorId: string;
 }
 
-type QueriedPostType = {
-  authorId: string;
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  title: string;
-  subTitle: string | null;
-  content: string[];
-  imgUrl: string | null;
-  editorId: string | null;
-  editor?: { username: string };
-  author?: { username: string };
-};
+type QueriedPostType =
+  | ({
+      author: {
+        username: string;
+      };
+      editor?: {
+        username: string;
+      } | null;
+    } & {
+      id: string;
+      imgUrl: string | null;
+      title: string;
+      subTitle: string | null;
+      content: string[];
+      authorId: string;
+      createdAt: Date;
+      updatedAt: Date;
+      editorId: string | null;
+    })
+  | null;
 
 type CommentType = {
   postId: string;
@@ -43,5 +50,5 @@ type CommentType = {
   updatedAt: Date;
   content: string;
   authorId: string;
-  author: { username: string };
+  author: { username: string; imgUrl: string | null };
 };
