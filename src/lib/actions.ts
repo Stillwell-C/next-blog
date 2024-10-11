@@ -7,8 +7,15 @@ import { CredentialsSignin } from "next-auth";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { postContentToArray } from "./utils";
 
-export const handleGitHubLogin = async () => {
-  await signIn("github");
+export const handleGitHubLogin = async (formData: FormData) => {
+  const { redirectUrl } = Object.fromEntries(formData);
+
+  const redirectLink = redirectUrl?.toString()?.length
+    ? redirectUrl.toString()
+    : "/";
+
+  //CallbackURL 현재 next-auth 버전에서 문제가 있음
+  await signIn("github", { callbackUrl: redirectLink });
 };
 
 export const handleLogout = async () => {
@@ -75,11 +82,13 @@ export const credentialsLogin = async (
   prevState: FormStateType | null,
   formData: FormData
 ) => {
-  const { username, password } = Object.fromEntries(formData);
+  const { username, password, redirectUrl } = Object.fromEntries(formData);
 
   if (!username || !password) {
     return { error: true, errorMsg: "Please input username and password." };
   }
+
+  const redirectLink = redirectUrl?.toString()?.length ? redirectUrl : "/";
 
   try {
     const user = await prisma.user.findUnique({
@@ -99,7 +108,10 @@ export const credentialsLogin = async (
       return { error: true, errorMsg: "아이디 또는 비밀번호가 맞지 않습니다" };
     }
 
-    await signIn("credentials", { redirectTo: "/", ...user });
+    await signIn("credentials", {
+      redirectTo: redirectLink as string,
+      ...user,
+    });
     return { success: true };
   } catch (err) {
     if (err instanceof CredentialsSignin) {
