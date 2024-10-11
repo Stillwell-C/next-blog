@@ -6,6 +6,8 @@ import FormStateError from "./FormStateError";
 import FormStatusButton from "./FormStatusSubmitButton";
 import { createComment } from "@/lib/actions";
 import { useFormState } from "react-dom";
+import RedirectLink from "./RedirectLink";
+import { usePathname } from "next/navigation";
 
 type Props = {
   postId: string;
@@ -23,12 +25,10 @@ const PostCommentForm = ({ postId, authorId }: Props) => {
   }, [state]);
 
   const loginMessage = (
-    <p>
-      댓글을 작성하려면{" "}
-      <Link href={"/login"} className='underline'>
-        로그인
-      </Link>{" "}
-      해주세요
+    <p className='text-center'>
+      <span>댓글을 작성하려면 </span>
+      <RedirectLink pathname='/login' linkText='로그인' />
+      <span> 해주세요</span>
     </p>
   );
 
@@ -53,7 +53,7 @@ const PostCommentForm = ({ postId, authorId }: Props) => {
     </form>
   );
 
-  return <div className='mt-10'>{authorId ? commentForm : loginMessage}</div>;
+  return <div className='my-10'>{authorId ? commentForm : loginMessage}</div>;
 };
 
 export default PostCommentForm;
