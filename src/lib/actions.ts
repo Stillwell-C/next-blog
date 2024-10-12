@@ -125,6 +125,42 @@ export const credentialsLogin = async (
   }
 };
 
+export const getUser = async (userId: string) => {
+  try {
+    const user = await prisma.user.findFirst({
+      where: { id: userId },
+      select: {
+        username: true,
+        imgUrl: true,
+        updatedAt: true,
+        createdAt: true,
+      },
+    });
+
+    console.log("getUser ", user);
+
+    return user;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export const updateUserImg = async (imgUrl: string, userId: string) => {
+  try {
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        imgUrl: imgUrl,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const createPost = async (
   prevState: FormStateType | null,
   formData: FormData
