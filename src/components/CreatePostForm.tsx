@@ -1,7 +1,7 @@
 "use client";
 
 import { createPost } from "@/lib/actions";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import PostForm from "./PostForm";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ const CreatePostForm = ({ authorId }: Props) => {
     if (state?.success) {
       router.push("/");
     }
-  });
+  }, [state]);
 
   return (
     <PostForm
