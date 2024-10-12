@@ -8,7 +8,11 @@ type Props = {
   pageTitle?: string;
 };
 
-const PostResults = ({ postData, page, pageTitle = "Posts" }: Props) => {
+const PaginatedPostResults = ({
+  postData,
+  page,
+  pageTitle = "Posts",
+}: Props) => {
   return (
     <div className='mx-auto max-w-3xl h-full flex flex-col items-center'>
       <div className='flex-1 flex flex-col gap-6 items-center'>
@@ -26,4 +30,4 @@ const PostResults = ({ postData, page, pageTitle = "Posts" }: Props) => {
   );
 };
 
-export default PostResults;
+export default PaginatedPostResults;
