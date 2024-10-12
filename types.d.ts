@@ -43,6 +43,31 @@ type QueriedPostType =
     })
   | null;
 
+type FindManyPostType =
+  | ({
+      author: {
+        username: string;
+      };
+    } & {
+      id: string;
+      imgUrl: string | null;
+      title: string;
+      subTitle: string | null;
+      content?: string;
+      authorId: string;
+      createdAt: Date;
+      updatedAt: Date;
+      editorId: string | null;
+    })
+  | null;
+
+type PostDataReturnType = {
+  posts: FindManyPostType[];
+  currentPage: number;
+  totalCount: number;
+  totalPages: number;
+};
+
 type CommentType = {
   postId: string;
   id: string;
