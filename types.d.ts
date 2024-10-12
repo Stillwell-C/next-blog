@@ -18,7 +18,7 @@ interface RegisterFormStateType extends FormStateType {
 interface PostFormStateType {
   title: string;
   subTitle?: string;
-  content: string[];
+  content: string;
   authorId: string;
 }
 
@@ -35,7 +35,7 @@ type QueriedPostType =
       imgUrl: string | null;
       title: string;
       subTitle: string | null;
-      content: string[];
+      content: string;
       authorId: string;
       createdAt: Date;
       updatedAt: Date;
