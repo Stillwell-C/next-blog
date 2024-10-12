@@ -1,8 +1,9 @@
-export const postContentToArray = (content: string) =>
+export const formatPostContent = (content: string) =>
   content
     .toString()
-    .split("\n")
-    .filter((el) => el.trim());
+    .split(/\r\n|\n/g)
+    .filter((el) => el.trim())
+    .join("\n");
 
 export const formatDate = (date: Date) => {
   return new Date(date).toLocaleString("sv-SE", {
