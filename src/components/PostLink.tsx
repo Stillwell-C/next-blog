@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 type Props = {
-  post: QueriedPostType | null;
+  post: FindManyPostType | null;
 };
 
 const PostLink = ({ post }: Props) => {
