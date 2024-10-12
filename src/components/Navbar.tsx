@@ -2,6 +2,7 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { handleLogout } from "../lib/actions";
 import RedirectLink from "./RedirectLink";
+import SearchForm from "./SearchForm";
 
 const Navbar = async () => {
   const session = await auth();
@@ -23,7 +24,10 @@ const Navbar = async () => {
           Next Blog
         </Link>
       </h1>
-      <div>{!session ? signInButton : signOutButton}</div>
+      <div>
+        <SearchForm />
+        <div>{!session ? signInButton : signOutButton}</div>
+      </div>
     </nav>
   );
 };
