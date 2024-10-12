@@ -1,4 +1,4 @@
-import PostResults from "@/components/PostResults";
+import PostResults from "@/components/PaginatedPostResults";
 import { getPosts } from "@/lib/actions";
 
 type Props = {
