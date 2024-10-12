@@ -23,7 +23,7 @@ const page = async ({ params: { slug } }: Props) => {
   const displayDate = post?.createdAt ? formatDate(post?.createdAt) : "";
   const displayEditDate = post?.updatedAt ? formatDate(post?.updatedAt) : "";
 
-  const readingMinutes = Math.ceil(post?.content.length || 0 / 200);
+  const readingMinutes = Math.ceil((post?.content.length || 0) / 200);
 
   if (!post) {
     //TODO: REDIRECT TO ERROR PAGE
@@ -54,7 +54,7 @@ const page = async ({ params: { slug } }: Props) => {
             </div>
           )}
         </div>
-        {post?.content.map((paragraph) => (
+        {post?.content.split("\n").map((paragraph) => (
           <p className='mb-4' key={paragraph.slice(0, 15)}>
             {paragraph}
           </p>
