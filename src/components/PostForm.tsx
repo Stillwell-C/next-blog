@@ -62,7 +62,7 @@ const PostForm = ({
           placeholder='내용'
           id='content'
           name='content'
-          defaultValue={post?.content?.join("\n\n")}
+          defaultValue={post?.content.split("\n").join("\n\n")}
           className='border border-black rounded-md p-4 resize-y h-44'
         ></textarea>
       </div>
