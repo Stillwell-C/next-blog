@@ -9,17 +9,18 @@ datasource db {
 }
 
 model User {
-  id              String    @id @default(uuid())
-  oAuthProviderId String?   @unique
-  username        String    @unique
+  id              String       @id @default(uuid())
+  oAuthProviderId String?      @unique
+  username        String       @unique
   password        String?
-  role            Role      @default(USER)
+  role            Role         @default(USER)
   imgUrl          String?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  authoredPosts   Post[]    @relation("authoredPosts")
-  editedPosts     Post[]    @relation("editedPosts")
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  authoredPosts   Post[]       @relation("authoredPosts")
+  editedPosts     Post[]       @relation("editedPosts")
   comments        Comment[]
+  SubComment      SubComment[]
 }
 
 model Post {
@@ -38,14 +39,26 @@ model Post {
 }
 
 model Comment {
+  id         String       @id @default(uuid())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  content    String
+  author     User         @relation(fields: [authorId], references: [id])
+  authorId   String
+  post       Post         @relation(fields: [postId], references: [id])
+  postId     String
+  SubComment SubComment[]
+}
+
+model SubComment {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   content   String
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
-  post      Post     @relation(fields: [postId], references: [id])
-  postId    String
+  commentId String
+  comment   Comment  @relation(fields: [commentId], references: [id])
 }
 
 enum Role {
