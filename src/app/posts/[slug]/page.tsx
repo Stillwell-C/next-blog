@@ -4,6 +4,7 @@ import PostComments from "@/components/PostComments";
 import { getPost } from "@/lib/actions";
 import { auth } from "@/lib/auth";
 import { formatDate } from "@/lib/utils";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import React from "react";
 import { RiBook2Fill } from "react-icons/ri";
@@ -33,6 +34,17 @@ const page = async ({ params: { slug } }: Props) => {
   return (
     <div className='mx-auto p-8 max-w-3xl'>
       <section>
+        {post?.imgUrl && (
+          <div className='mx-auto mb-8 relative w-96 h-64 overflow-hidden'>
+            <Image
+              src={post.imgUrl}
+              layout='fill'
+              objectFit='cover'
+              alt='게시물 이미지'
+              className='w-full h-full rounded-lg'
+            />
+          </div>
+        )}
         <h2 className='text-2xl font-semibold'>{post?.title}</h2>
         <h3 className='text-lg'>{post?.subTitle}</h3>
         <div className='mb-8'>
