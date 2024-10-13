@@ -6,6 +6,10 @@ import bcrypt from "bcryptjs";
 import { CredentialsSignin } from "next-auth";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { formatPostContent } from "./utils";
+import {
+  uploadFileToCloudinary,
+  uploadFileToCloudinaryFromAction,
+} from "./cloudinaryUtils";
 
 export const handleGitHubLogin = async (formData: FormData) => {
   const { redirectUrl } = Object.fromEntries(formData);
@@ -165,7 +169,8 @@ export const createPost = async (
   prevState: FormStateType | null,
   formData: FormData
 ) => {
-  const { title, subTitle, content, authorId } = Object.fromEntries(formData);
+  const { title, subTitle, content, authorId, imageUpload } =
+    Object.fromEntries(formData);
 
   if (!title || !content) {
     return { error: true, errorMsg: "제목과 내용은 꼭 입력해주세요." };
@@ -175,6 +180,24 @@ export const createPost = async (
     return { error: true, errorMsg: "인증 자격 증명이 없습니다." };
   }
 
+  let imgUrl = null;
+
+  const imageFormData = imageUpload as File;
+  if (imageFormData.size > 0) {
+    try {
+      const res = await uploadFileToCloudinaryFromAction(imageFormData);
+
+      if (!res.error && res.imgUrl) {
+        imgUrl = res.imgUrl;
+      } else {
+        return { error: true, errorMsg: "이미지 업로드 에로가 발생했습니다" };
+      }
+    } catch (err) {
+      console.log(err);
+      return { error: true, errorMsg: "이미지 업로드 에로가 발생했습니다" };
+    }
+  }
+
   const parsedContent = formatPostContent(content as string);
 
   const data: PostFormStateType = {
@@ -182,6 +205,7 @@ export const createPost = async (
     subTitle: subTitle as string,
     content: parsedContent as string,
     authorId: authorId as string,
+    imgUrl,
   };
 
   try {
@@ -191,6 +215,7 @@ export const createPost = async (
         subTitle: data.subTitle,
         content: data.content,
         authorId: data.authorId,
+        imgUrl: data.imgUrl,
       },
     });
 
@@ -279,8 +304,15 @@ export const editPost = async (
   formData: FormData
 ) => {
   try {
-    const { postId, title, subTitle, content, editorId, imgUrl } =
-      Object.fromEntries(formData);
+    const {
+      postId,
+      title,
+      subTitle,
+      content,
+      editorId,
+      existingImgUrl,
+      imageUpload,
+    } = Object.fromEntries(formData);
 
     if (!postId) {
       return { error: true, errorMsg: "해당 포스팅을 찾을 수 없습니다." };
@@ -294,6 +326,24 @@ export const editPost = async (
       return { error: true, errorMsg: "인증 자격 증명이 없습니다." };
     }
 
+    let imgUrl = (existingImgUrl as string) || null;
+
+    const imageFormData = imageUpload as File;
+    if (imageFormData.size > 0) {
+      try {
+        const res = await uploadFileToCloudinaryFromAction(imageFormData);
+
+        if (!res.error && res.imgUrl) {
+          imgUrl = res.imgUrl;
+        } else {
+          return { error: true, errorMsg: "이미지 업로드 에로가 발생했습니다" };
+        }
+      } catch (err) {
+        console.log(err);
+        return { error: true, errorMsg: "이미지 업로드 에로가 발생했습니다" };
+      }
+    }
+
     const parsedContent = formatPostContent(content as string);
 
     const data = {
@@ -302,7 +352,7 @@ export const editPost = async (
       subTitle: subTitle as string,
       content: parsedContent,
       editorId: editorId as string,
-      imgUrl: imgUrl as string,
+      imgUrl,
     };
 
     await prisma.post.update({
