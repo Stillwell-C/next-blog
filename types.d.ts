@@ -20,6 +20,7 @@ interface PostFormStateType {
   subTitle?: string;
   content: string;
   authorId: string;
+  imgUrl?: string | null;
 }
 
 type QueriedPostType =
