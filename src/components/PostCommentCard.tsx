@@ -1,4 +1,5 @@
 import ProfileImage from "./ProfileImage";
+import SubCommentList from "./SubCommentList";
 
 type Props = {
   comment: CommentType;
@@ -6,13 +7,14 @@ type Props = {
 
 const PostCommentCard = ({ comment }: Props) => {
   return (
-    <div className='flex items-center gap-4'>
+    <div className='flex items-start gap-4'>
       <div>
         <ProfileImage imgUrl={comment?.author?.imgUrl} />
       </div>
-      <div className='flex flex-col'>
+      <div className='flex flex-col flex-1'>
         <span className='text-sm'>{comment.author.username}</span>
         <span>{comment.content}</span>
+        <SubCommentList comment={comment} />
       </div>
     </div>
   );
