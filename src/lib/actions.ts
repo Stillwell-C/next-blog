@@ -6,10 +6,8 @@ import bcrypt from "bcryptjs";
 import { CredentialsSignin } from "next-auth";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { formatPostContent } from "./utils";
-import {
-  uploadFileToCloudinary,
-  uploadFileToCloudinaryFromAction,
-} from "./cloudinaryUtils";
+import { uploadFileToCloudinaryFromAction } from "./cloudinaryUtils";
+import { revalidatePath } from "next/cache";
 
 export const handleGitHubLogin = async (formData: FormData) => {
   const { redirectUrl } = Object.fromEntries(formData);
@@ -367,6 +365,8 @@ export const editPost = async (
         imgUrl: data.imgUrl,
       },
     });
+
+    revalidatePath(`/posts/${postId}`);
 
     return { success: true };
   } catch (err) {
