@@ -1,6 +1,5 @@
 "use client";
 import { uploadFileToCloudinary } from "@/lib/cloudinaryUtils";
-import React, { useState } from "react";
 
 type Props = {
   setImgUrl: React.Dispatch<React.SetStateAction<string>>;
