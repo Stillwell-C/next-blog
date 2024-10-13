@@ -4,7 +4,7 @@ import PostComments from "@/components/PostComments";
 import SubPosts from "@/components/SubPosts";
 import { getPost } from "@/lib/actions";
 import { auth } from "@/lib/auth";
-import { formatDate } from "@/lib/utils";
+import { formatDate, resizeCloudinaryImg } from "@/lib/utils";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -39,9 +39,8 @@ const page = async ({ params: { slug } }: Props) => {
         {post?.imgUrl && (
           <div className='mx-auto mb-8 relative w-96 h-64 overflow-hidden'>
             <Image
-              src={post.imgUrl}
-              layout='fill'
-              objectFit='cover'
+              src={resizeCloudinaryImg(post.imgUrl, 500)}
+              fill
               alt='게시물 이미지'
               className='w-full h-full rounded-lg'
             />
