@@ -14,3 +14,9 @@ export const formatDate = (date: Date) => {
     minute: "2-digit",
   });
 };
+
+export const nextPageConfirmation = (currentPage = 0, totalPages = 0) => {
+  if (!currentPage || !totalPages) return false;
+
+  return totalPages > currentPage;
+};
