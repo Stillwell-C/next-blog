@@ -67,7 +67,7 @@ const page = async ({ params: { slug } }: Props) => {
             </div>
           )}
         </div>
-        {post?.content.split("\n").map((paragraph) => (
+        {post?.content.split("\n").map((paragraph: string) => (
           <p className='mb-4' key={paragraph.slice(0, 15)}>
             {paragraph}
           </p>
