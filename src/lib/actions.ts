@@ -148,18 +148,36 @@ export const getUser = async (userId: string) => {
   }
 };
 
-export const updateUserImg = async (imgUrl: string, userId: string) => {
+export const updateUserImg = async (
+  prevState: FormStateType | null,
+  formData: FormData
+) => {
   try {
-    await prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        imgUrl: imgUrl,
-      },
-    });
+    const { userId, imageUpload } = Object.fromEntries(formData);
+
+    if (!userId || typeof userId !== "string") {
+      return { error: true, errorMsg: "로그인 해주세요." };
+    }
+
+    const imageFormData = imageUpload as File;
+    const res = await uploadFileToCloudinaryFromAction(imageFormData);
+
+    if (!res.error && res.imgUrl) {
+      await prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          imgUrl: res.imgUrl,
+        },
+      });
+    } else {
+      return { error: true, errorMsg: "이미지 업로드 에로가 발생했습니다" };
+    }
+
+    return { success: true };
   } catch (err) {
-    console.log(err);
+    return { error: true, errorMsg: "이미지 업로드 에로가 발생했습니다" };
   }
 };
 
