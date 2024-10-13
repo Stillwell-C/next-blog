@@ -20,3 +20,13 @@ export const nextPageConfirmation = (currentPage = 0, totalPages = 0) => {
 
   return totalPages > currentPage;
 };
+
+export const resizeCloudinaryImg = (
+  url: string,
+  width: number,
+  height?: number
+) => {
+  const splitUrl = url.split("upload");
+  const dimensions = height ? `w_${width},h_${height}` : `w_${width}`;
+  return splitUrl.join(`upload/${dimensions}`);
+};
