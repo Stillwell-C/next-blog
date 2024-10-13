@@ -7,8 +7,6 @@ import SearchForm from "./SearchForm";
 const Navbar = async () => {
   const session = await auth();
 
-  console.log(session);
-
   const signInButton = <RedirectLink pathname='/login' linkText='로그인' />;
   const signOutButton = (
     <form action={handleLogout}>
