@@ -1,60 +1,64 @@
 "use client";
 
-import { User } from "next-auth";
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import ProfileImage from "./ProfileImage";
-import ImageUploadForm from "./ImageUploadForm";
-import FormStatusButton from "./FormStatusSubmitButton";
 import { updateUserImg } from "@/lib/actions";
-import { ClipLoader } from "react-spinners";
+import { useFormState } from "react-dom";
+import FormStateError from "./FormStateError";
+import FormStatusSpinner from "./FormStatusSpinner";
 
 type Props = {
   imgUrl?: string | null;
   userId: string;
 };
 
-const ProfileForm = ({ imgUrl, userId }: Props) => {
-  const [displayImgUrl, setDisplayImgUrl] = useState(imgUrl);
-  const [newImgUrl, setNewImgUrl] = useState("");
-  const [imgLoading, setImgLoading] = useState(false);
-  const [updateLoading, setUpdateLoading] = useState(false);
-  const [imgErrorMsg, setImgErrorMsg] = useState("");
+const ProfileForm = ({ imgUrl: existingImgUrl, userId }: Props) => {
+  const [imgUrl, setImgUrl] = useState(existingImgUrl || "");
 
-  const displayLoadingSpinner = imgLoading || updateLoading;
+  const formButtonRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    const handleImgUpdate = async () => {
-      try {
-        await updateUserImg(newImgUrl, userId);
-        setUpdateLoading(false);
-      } catch (err) {
-        setUpdateLoading(false);
+  const [state, formAction] = useFormState(updateUserImg, null);
+
+  const updateImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setImgUrl(URL.createObjectURL(e.target.files[0]));
+
+      if (formButtonRef?.current) {
+        formButtonRef.current.click();
       }
-    };
-
-    if (newImgUrl.length) {
-      setUpdateLoading(true);
-      setDisplayImgUrl(newImgUrl);
-      handleImgUpdate();
     }
-  }, [newImgUrl]);
+  };
 
   return (
-    <form className='flex gap-12 items-center mt-4'>
-      <div>
-        <ProfileImage size={50} imgUrl={displayImgUrl} />
+    <form className='flex flex-col gap-4' action={formAction}>
+      <div className='flex gap-12 items-center mt-4'>
+        <div>
+          <ProfileImage size={50} imgUrl={imgUrl} />
+        </div>
+        <div>
+          <label
+            htmlFor='imageUpload'
+            className='text-white bg-black px-4 py-2 rounded cursor-pointer'
+          >
+            파일 선택
+          </label>
+          <input
+            id='imageUpload'
+            type='file'
+            accept='image/*'
+            name='imageUpload'
+            aria-label='image upload'
+            onChange={updateImage}
+            hidden
+          />
+        </div>
+        <div className='min-w-11'>
+          <FormStatusSpinner />
+        </div>
       </div>
-      <div>
-        <ImageUploadForm
-          setImgUrl={setNewImgUrl}
-          setLoading={setImgLoading}
-          setErrorMessage={setImgErrorMsg}
-        />
-        {imgErrorMsg && <p>{imgErrorMsg}</p>}
-      </div>
-      <div className='min-w-11'>
-        {displayLoadingSpinner && <ClipLoader size={35} />}
-      </div>
+      <FormStateError formState={state} />
+      <input type='text' name='userId' value={userId} hidden readOnly />
+      <button ref={formButtonRef} type='submit' hidden></button>
     </form>
   );
 };
