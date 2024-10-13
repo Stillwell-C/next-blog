@@ -1,6 +1,7 @@
 import LinkButton from "@/components/LinkButton";
 import PostCommentForm from "@/components/PostCommentForm";
 import PostComments from "@/components/PostComments";
+import SubPosts from "@/components/SubPosts";
 import { getPost } from "@/lib/actions";
 import { auth } from "@/lib/auth";
 import { formatDate } from "@/lib/utils";
@@ -20,6 +21,7 @@ const page = async ({ params: { slug } }: Props) => {
   const session = await auth();
 
   const editHref = `/posts/${slug}/edit`;
+  const replyHref = `/posts/${slug}/reply`;
 
   const displayDate = post?.createdAt ? formatDate(post?.createdAt) : "";
   const displayEditDate = post?.updatedAt ? formatDate(post?.updatedAt) : "";
@@ -72,11 +74,13 @@ const page = async ({ params: { slug } }: Props) => {
           </p>
         ))}
         {session?.user?.admin && (
-          <div className='flex justify-end'>
+          <div className='flex gap-4 justify-end'>
+            <LinkButton href={replyHref} linkText='답글 쓰기' />
             <LinkButton href={editHref} linkText='수정' />
           </div>
         )}
       </section>
+      <SubPosts postId={post.id} />
       <PostCommentForm postId={post?.id} authorId={session?.user?.id} />
       <PostComments postId={post?.id} />
     </div>
