@@ -88,3 +88,17 @@ type SubCommentType = {
   authorId: string;
   author: { username: string; imgUrl: string | null };
 };
+
+type SubPostType = {
+  author: {
+    username: string;
+    imgUrl: string | null;
+  };
+} & {
+  postId: string;
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  content: string;
+  authorId: string;
+};
