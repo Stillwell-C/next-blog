@@ -21,6 +21,7 @@ model User {
   editedPosts     Post[]       @relation("editedPosts")
   comments        Comment[]
   SubComment      SubComment[]
+  SubPost         SubPost[]
 }
 
 model Post {
@@ -36,6 +37,18 @@ model Post {
   comments  Comment[]
   editorId  String?
   editor    User?     @relation(fields: [editorId], references: [id], name: "editedPosts")
+  SubPost   SubPost[]
+}
+
+model SubPost {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  content   String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
 }
 
 model Comment {
