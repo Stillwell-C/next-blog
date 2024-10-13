@@ -37,8 +37,6 @@ export const GET = async (req: NextRequest) => {
 
     const totalPages = Math.ceil(subCommentCount / take);
 
-    console.log(subComments);
-
     return NextResponse.json(
       {
         subComments,
@@ -49,6 +47,7 @@ export const GET = async (req: NextRequest) => {
       { status: 200 }
     );
   } catch (err) {
+    console.log(err);
     return NextResponse.json(
       { message: "에로가 발생했습니다" },
       { status: 400 }
