@@ -78,3 +78,13 @@ type CommentType = {
   authorId: string;
   author: { username: string; imgUrl: string | null };
 };
+
+type SubCommentType = {
+  commentId: string;
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  content: string;
+  authorId: string;
+  author: { username: string; imgUrl: string | null };
+};
