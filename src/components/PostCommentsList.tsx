@@ -3,6 +3,7 @@
 import { getComments } from "@/lib/actions";
 import { useState } from "react";
 import PostCommentCard from "./PostCommentCard";
+import { nextPageConfirmation } from "@/lib/utils";
 
 type Props = {
   initialComments:
@@ -14,12 +15,6 @@ type Props = {
       }
     | undefined;
   postId: string;
-};
-
-const nextPageConfirmation = (currentPage = 0, totalPages = 0) => {
-  if (!currentPage || !totalPages) return false;
-
-  return totalPages > currentPage;
 };
 
 const PostCommentsList = ({ initialComments, postId }: Props) => {
