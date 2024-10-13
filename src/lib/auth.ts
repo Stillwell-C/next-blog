@@ -11,12 +11,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
     Credentials({
       name: "credentials",
-      async authorize(credentials) {
+      async authorize(user) {
         try {
-          if (!credentials) {
+          if (
+            typeof user.id !== "string" ||
+            typeof user.username !== "string" ||
+            (typeof user.imgUrl !== "string" && user.imgUrl !== null) ||
+            typeof user.role !== "string"
+          ) {
             return null;
           }
-          return credentials;
+
+          return {
+            id: user.id,
+            username: user.username,
+            imgUrl: user.imgUrl,
+            role: user.role,
+          };
         } catch (err) {
           return null;
         }
@@ -88,7 +99,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     authorized({ auth, request }) {
       const user = auth?.user;
 
-      const currentURL = request?.nextUrl?.pathname?.toString();
+      const currentURL: string = request?.nextUrl?.pathname;
 
       //Prevent logged in users from reaching the login or register pages
       //Also redirects logged in users above from login to home
