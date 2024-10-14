@@ -1,37 +1,78 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { IoSearch } from "react-icons/io5";
+import { IoClose, IoSearch } from "react-icons/io5";
 
 const SearchForm = () => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!searchQuery.length) return;
     setSearchQuery("");
+    setShowSearch(false);
     router.push(`/search/${searchQuery}`);
   };
 
   return (
-    <form onSubmit={handleSearch}>
-      <div className='flex border border-black rounded p-1'>
-        <input
-          type='text'
-          name='searchQuery'
-          id='searchQuery'
-          autoComplete='off'
-          aria-label='블로그 검색'
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className='outline-none '
-        />
-        <button className='p-1' type='submit'>
-          <IoSearch />
-        </button>
-      </div>
-    </form>
+    <div className='relative'>
+      {/* DESKTOP */}
+      <button
+        className='hidden md:flex'
+        onClick={() => setShowSearch((prev) => !prev)}
+      >
+        <IoSearch size={20} />
+      </button>
+      {showSearch && (
+        <form
+          className='md:absolute md:top-10 md:-translate-x-60 '
+          onSubmit={handleSearch}
+        >
+          <div className='flex border border-black rounded p-1'>
+            <button
+              className='p-1'
+              type='button'
+              onClick={() => setShowSearch(false)}
+            >
+              <IoClose />
+            </button>
+            <input
+              type='text'
+              name='searchQuery'
+              id='searchQuery'
+              autoComplete='off'
+              aria-label='블로그 검색'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className='outline-none '
+            />
+            <button className='p-1' type='submit'>
+              <IoSearch />
+            </button>
+          </div>
+        </form>
+      )}
+      {/* MOBILE */}
+      <form className='block md:hidden ' onSubmit={handleSearch}>
+        <div className='flex p-2'>
+          <button className='p-1' type='submit'>
+            <IoSearch />
+          </button>
+          <input
+            type='text'
+            name='searchQuery'
+            id='searchQuery'
+            autoComplete='off'
+            aria-label='블로그 검색'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className='outline-none border-b border-black w-36'
+          />
+        </div>
+      </form>
+    </div>
   );
 };
 
