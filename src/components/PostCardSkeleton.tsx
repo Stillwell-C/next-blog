@@ -3,7 +3,7 @@ import Skeleton from "react-loading-skeleton";
 
 const PostCardSkeleton = () => {
   return (
-    <div className='p-6 w-full flex gap-8 bg-white shadow-md rounded-lg flex-row-reverse items-center'>
+    <div className='p-6 w-full flex gap-8 shadow-md rounded-lg flex-row-reverse items-center'>
       <div className='w-1/3 h-full'>
         <Skeleton height={180} />
       </div>

@@ -15,7 +15,7 @@ const PostCard = ({ post, index }: Props) => {
 
   return (
     <article
-      className={`p-6 w-full flex gap-8 bg-white shadow-md rounded-lg ${
+      className={`p-6 w-full flex gap-8 shadow-md rounded-lg ${
         invert && post?.imgUrl ? "flex-row-reverse" : ""
       } items-center`}
     >
