@@ -30,7 +30,6 @@ const LoginForm = () => {
               id='username'
               name='username'
               className='border border-black rounded-md p-4'
-              autoComplete='off'
               maxLength={30}
             />
           </div>
@@ -44,7 +43,6 @@ const LoginForm = () => {
               id='password'
               name='password'
               className='border border-black rounded-md p-4'
-              autoComplete='off'
               maxLength={50}
             />
           </div>
