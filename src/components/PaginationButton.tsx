@@ -21,7 +21,7 @@ const PaginationButton = ({
   };
   return (
     <button
-      className='border border-black rounded w-8 disabled:text-gray-500'
+      className='border border-black dark:border-slate-700 rounded w-8 disabled:text-gray-500'
       type='button'
       disabled={currentPageNum === pageNum ? true : false}
       aria-current={currentPageNum === pageNum ? true : false}
