@@ -1,22 +1,22 @@
 import React from "react";
-import PostLink from "./PostLink";
+import PostCard from "./PostCard";
 
 type Props = {
   posts: FindManyPostType[];
   pageTitle?: string;
 };
 
-const PostResults = ({ posts, pageTitle = "Posts" }: Props) => {
+const PostList = ({ posts, pageTitle = "Posts" }: Props) => {
   return (
-    <div className='flex-1 flex flex-col gap-6 items-center'>
+    <div className='w-full flex flex-col gap-6 items-center'>
       <h2 className='text-2xl'>{pageTitle}</h2>
-      <div className='flex flex-col gap-4'>
-        {posts?.map((post) => (
-          <PostLink post={post} key={post?.id} />
+      <div className='w-full p-4 flex flex-col gap-4'>
+        {posts?.map((post, index) => (
+          <PostCard post={post} index={index} key={post?.id} />
         ))}
       </div>
     </div>
   );
 };
 
-export default PostResults;
+export default PostList;
