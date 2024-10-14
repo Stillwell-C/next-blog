@@ -98,6 +98,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     authorized({ auth, request }) {
       const user = auth?.user;
+      const admin = auth?.user.admin;
 
       const currentURL: string = request?.nextUrl?.pathname;
 
@@ -106,6 +107,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const isOnLoginPage = currentURL.startsWith("/login");
       const isOnRegisterPage = currentURL.startsWith("/register");
       if ((isOnLoginPage || isOnRegisterPage) && user) {
+        return Response.redirect(new URL("/", request.nextUrl));
+      }
+
+      //Prevent non-admins from editing/posting posts
+      const isOnCreatePostPage = currentURL.match(/\/posts\/[^/]+\/edit/g);
+      const isOnPostCreatePage = currentURL.match(/\/posts\/create/g);
+      if ((isOnCreatePostPage || isOnPostCreatePage) && !admin) {
+        return Response.redirect(new URL("/", request.nextUrl));
+      }
+
+      //Prevent non-logged in users from accessing post reply or profile pages
+      const isOnPostReplyPage = currentURL.match(/\/posts\/[^/]+\/reply/);
+      const isOnProfilePage = currentURL.match(/\/profile/);
+      if ((isOnPostReplyPage || isOnProfilePage) && !user?.id) {
         return Response.redirect(new URL("/", request.nextUrl));
       }
 
