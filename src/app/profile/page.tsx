@@ -33,7 +33,7 @@ const page = async () => {
         {user?.createdAt && (
           <div className='flex gap-4 mb-2'>
             <p className='font-medium text-gray-600 dark:text-gray-500'>
-              사용자 아이디:
+              가입 일자:
             </p>
             <p>{formatDate(user?.createdAt)}</p>
           </div>
@@ -41,7 +41,7 @@ const page = async () => {
         {user?.updatedAt && (
           <div className='flex gap-4 mb-2'>
             <p className='font-medium text-gray-600 dark:text-gray-500'>
-              수정 일자:
+              최신 프로필 수정 일자:
             </p>
             <p>{formatDate(user?.updatedAt)}</p>
           </div>
