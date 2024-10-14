@@ -30,6 +30,7 @@ const LoginForm = () => {
               id='username'
               name='username'
               className='border border-black rounded-md p-4'
+              autoComplete='off'
             />
           </div>
           <div className='flex flex-col'>
@@ -42,6 +43,7 @@ const LoginForm = () => {
               id='password'
               name='password'
               className='border border-black rounded-md p-4'
+              autoComplete='off'
             />
           </div>
           <FormStatusButton buttonText='로그인' />
