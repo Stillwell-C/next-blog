@@ -32,11 +32,11 @@ model Post {
   subTitle  String?
   content   String
   imgUrl    String?
-  author    User      @relation(fields: [authorId], references: [id], name: "authoredPosts")
+  author    User      @relation(fields: [authorId], references: [id], name: "authoredPosts", onDelete: Cascade)
   authorId  String
   comments  Comment[]
   editorId  String?
-  editor    User?     @relation(fields: [editorId], references: [id], name: "editedPosts")
+  editor    User?     @relation(fields: [editorId], references: [id], name: "editedPosts", onDelete: SetNull)
   SubPost   SubPost[]
 }
 
@@ -45,9 +45,9 @@ model SubPost {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   content   String
-  author    User     @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  String
-  post      Post     @relation(fields: [postId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String
 }
 
@@ -56,9 +56,9 @@ model Comment {
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   content    String
-  author     User         @relation(fields: [authorId], references: [id])
+  author     User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId   String
-  post       Post         @relation(fields: [postId], references: [id])
+  post       Post         @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId     String
   SubComment SubComment[]
 }
@@ -68,10 +68,10 @@ model SubComment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   content   String
-  author    User     @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  String
   commentId String
-  comment   Comment  @relation(fields: [commentId], references: [id])
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
 }
 
 enum Role {
