@@ -25,7 +25,7 @@ const NavbarLinks = ({ session }: Props) => {
   );
 
   return (
-    <nav className='hidden md:flex items-center justify-end gap-4 text-2xl'>
+    <nav className='hidden md:flex items-center justify-end gap-6 text-xl'>
       <Link href='/posts'>Posts</Link>
       {session?.user.admin && <Link href='/posts/create'>Create Post</Link>}
       <div>{!session ? signInButton : signOutButton}</div>

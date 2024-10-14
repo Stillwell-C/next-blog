@@ -35,7 +35,7 @@ const NavbarMobile = ({ session }: Props) => {
           openBar ? "" : "hidden"
         }`}
       >
-        <div className='w-100 p-8 flex flex-col items-center bg-white dark:bg-gray-900 text-2xl'>
+        <div className='w-100 p-8 flex flex-col items-center gap-4 bg-white dark:bg-gray-900 text-2xl'>
           {session && <NavbarUserInfo session={session} />}
           <div>{!session ? signInButton : signOutButton}</div>
           <Link href='/posts'>Posts</Link>
