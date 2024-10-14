@@ -171,7 +171,7 @@ export const getUser = async (userId: string) => {
 };
 
 export const updateUserImg = async (
-  prevState: FormStateType | null,
+  prevState: UpdateImgFormStateType | null,
   formData: FormData
 ) => {
   try {
@@ -197,7 +197,7 @@ export const updateUserImg = async (
       return { error: true, errorMsg: "이미지 업로드 에로가 발생했습니다" };
     }
 
-    return { success: true };
+    return { success: true, imgUrl: res.imgUrl };
   } catch (err) {
     return { error: true, errorMsg: "이미지 업로드 에로가 발생했습니다" };
   }
