@@ -46,7 +46,6 @@ const SearchForm = ({ closeNavBar }: Props) => {
             <input
               type='text'
               name='searchQuery'
-              id='searchQuery'
               autoComplete='off'
               aria-label='블로그 검색'
               placeholder='블로그 검색'
@@ -66,7 +65,6 @@ const SearchForm = ({ closeNavBar }: Props) => {
           <input
             type='text'
             name='searchQuery'
-            id='searchQuery'
             autoComplete='off'
             aria-label='블로그 검색'
             placeholder='블로그 검색'
