@@ -34,7 +34,7 @@ const SubCommentForm = ({
   return (
     <form action={formAction}>
       <div className='flex gap-4'>
-        <div className='w-full flex border border-black rounded'>
+        <div className='w-full flex border border-black dark:border-slate-700 rounded'>
           <button
             type='button'
             className='p-1'
@@ -54,7 +54,7 @@ const SubCommentForm = ({
           <input
             type='text'
             name='content'
-            className='p-2 w-full border-black rounded outline-none'
+            className='p-2 w-full  rounded outline-none'
             autoComplete='off'
             ref={inputRef}
             maxLength={500}
