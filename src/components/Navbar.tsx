@@ -22,7 +22,7 @@ const Navbar = async () => {
           Next Blog
         </Link>
       </h1>
-      <div>
+      <div className='flex'>
         <SearchForm />
         <div>{!session ? signInButton : signOutButton}</div>
       </div>
