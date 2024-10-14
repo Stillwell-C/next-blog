@@ -38,7 +38,7 @@ const ProfileForm = ({ imgUrl: existingImgUrl, userId }: Props) => {
         <div>
           <label
             htmlFor='imageUpload'
-            className='text-white bg-black px-4 py-2 rounded cursor-pointer'
+            className='text-white bg-black dark:bg-slate-700 px-4 py-2 rounded cursor-pointer'
           >
             파일 선택
           </label>

@@ -45,9 +45,11 @@ const PostPage = async ({ slug }: Props) => {
           </div>
         )}
         <h2 className='text-3xl font-semibold'>{post?.title}</h2>
-        <h3 className='text-xl font-medium text-gray-700'>{post?.subTitle}</h3>
+        <h3 className='text-xl font-medium text-gray-700 dark:text-gray-400'>
+          {post?.subTitle}
+        </h3>
         <div className='mb-8'>
-          <div className='flex gap-1 items-center text-gray-700'>
+          <div className='flex gap-1 items-center dark:text-gray-400'>
             <RiBook2Fill />
             <span>읽기 시간: {readingMinutes}분</span>
           </div>

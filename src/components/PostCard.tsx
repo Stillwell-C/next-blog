@@ -40,7 +40,7 @@ const PostCard = ({ post, index }: Props) => {
           <Link href={`/posts/${post?.id}`}>{post?.title}</Link>
         </h3>
         <div>
-          <h4 className='text-xl font-medium text-gray-700'>
+          <h4 className='text-xl font-medium text-gray-700 dark:text-gray-400'>
             {post?.subTitle}
           </h4>
           <p className='text-sm text-gray-500'>{post?.author?.username}</p>

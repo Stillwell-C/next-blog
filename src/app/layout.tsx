@@ -30,7 +30,7 @@ export default function RootLayout({
     <SessionProvider>
       <html lang='en'>
         <body className={`${geistSans.variable} ${geistMono.variable} `}>
-          <div className='flex justify-center flex-1'>
+          <div className='flex justify-center flex-1 dark:bg-gray-900 dark:text-white'>
             <div className='min-h-screen max-w-7xl flex flex-col items-center flex-1'>
               <Navbar />
               <main className='flex-1 w-full'>{children}</main>

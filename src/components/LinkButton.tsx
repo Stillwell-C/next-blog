@@ -8,7 +8,10 @@ type Props = {
 
 const LinkButton = ({ href, linkText }: Props) => {
   return (
-    <Link href={href} className='bg-black text-white py-2 px-8 rounded'>
+    <Link
+      href={href}
+      className='bg-black dark:bg-slate-700 text-white py-2 px-8 rounded'
+    >
       {linkText}
     </Link>
   );
