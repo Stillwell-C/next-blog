@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProfileImage from "./ProfileImage";
 import { updateUserImg } from "@/lib/actions";
 import { useFormState } from "react-dom";
 import FormStateError from "./FormStateError";
 import FormStatusSpinner from "./FormStatusSpinner";
+import { useSession } from "next-auth/react";
 
 type Props = {
   imgUrl?: string | null;
@@ -13,6 +14,8 @@ type Props = {
 };
 
 const ProfileForm = ({ imgUrl: existingImgUrl, userId }: Props) => {
+  const { update } = useSession();
+
   const [imgUrl, setImgUrl] = useState(existingImgUrl || "");
 
   const formButtonRef = useRef<HTMLButtonElement>(null);
@@ -28,6 +31,16 @@ const ProfileForm = ({ imgUrl: existingImgUrl, userId }: Props) => {
       }
     }
   };
+
+  const updateUserSession = async (imgUrl: string) => {
+    await update({ imgUrl });
+  };
+
+  useEffect(() => {
+    if (state?.success && state?.imgUrl) {
+      updateUserSession(state.imgUrl);
+    }
+  }, [state]);
 
   return (
     <form className='flex flex-col gap-4' action={formAction}>
