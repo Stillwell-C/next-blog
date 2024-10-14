@@ -231,6 +231,14 @@ export const createPost = async (
     return { error: true, errorMsg: "글은 15000자 이하여야 합니다." };
   }
 
+  if (title.length > 250) {
+    return { error: true, errorMsg: "글 제목은 250자 이하여야 합니다." };
+  }
+
+  if (subTitle.length > 300) {
+    return { error: true, errorMsg: "글  부제는 300자 이하여야 합니다." };
+  }
+
   let imgUrl = null;
 
   const imageFormData = imageUpload as File;
@@ -376,6 +384,18 @@ export const editPost = async (
       typeof editorId !== "string"
     ) {
       return { error: true, errorMsg: "비정상적인 데이터가 전달되었습니다." };
+    }
+
+    if (content.length > 15000) {
+      return { error: true, errorMsg: "글은 15000자 이하여야 합니다." };
+    }
+
+    if (title.length > 250) {
+      return { error: true, errorMsg: "글 제목은 250자 이하여야 합니다." };
+    }
+
+    if (subTitle.length > 300) {
+      return { error: true, errorMsg: "글  부제는 300자 이하여야 합니다." };
     }
 
     let imgUrl = (existingImgUrl as string) || null;
