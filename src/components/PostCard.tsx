@@ -15,12 +15,12 @@ const PostCard = ({ post, index }: Props) => {
 
   return (
     <article
-      className={`p-6 w-full flex gap-8 shadow-md rounded-lg ${
-        invert && post?.imgUrl ? "flex-row-reverse" : ""
+      className={`p-6 w-full flex flex-col md:flex-row gap-8 shadow-md rounded-lg ${
+        invert && post?.imgUrl ? "md:flex-row-reverse" : ""
       } items-center`}
     >
       {post?.imgUrl && (
-        <div className='w-1/3 h-full flex justify-center'>
+        <div className='md:w-1/3 h-full flex justify-center'>
           <Image
             src={resizeCloudinaryImg(post?.imgUrl, 300)}
             height={150}
