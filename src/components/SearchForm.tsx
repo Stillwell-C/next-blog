@@ -3,7 +3,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoClose, IoSearch } from "react-icons/io5";
 
-const SearchForm = () => {
+type Props = {
+  closeNavBar?: () => void;
+};
+
+const SearchForm = ({ closeNavBar }: Props) => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
@@ -13,6 +17,7 @@ const SearchForm = () => {
     if (!searchQuery.length) return;
     setSearchQuery("");
     setShowSearch(false);
+    if (closeNavBar) closeNavBar();
     router.push(`/search/${searchQuery}`);
   };
 

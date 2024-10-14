@@ -15,10 +15,16 @@ type Props = { session: Session | null };
 const NavbarMobile = ({ session }: Props) => {
   const [openBar, setOpenBar] = useState(false);
 
-  const signInButton = <RedirectLink pathname='/login' linkText='로그인' />;
+  const closeNavBar = () => setOpenBar(false);
+
+  const signInButton = (
+    <div onClick={closeNavBar}>
+      <RedirectLink underline={false} pathname='/login' linkText='로그인' />
+    </div>
+  );
   const signOutButton = (
     <form action={handleLogout}>
-      <button>Sign Out</button>
+      <button onClick={closeNavBar}>Sign Out</button>
     </form>
   );
 
@@ -36,11 +42,21 @@ const NavbarMobile = ({ session }: Props) => {
         }`}
       >
         <div className='w-100 p-8 flex flex-col items-center gap-4 bg-white dark:bg-gray-900 text-2xl'>
-          {session && <NavbarUserInfo session={session} />}
+          {session && (
+            <div onClick={closeNavBar}>
+              <NavbarUserInfo session={session} />
+            </div>
+          )}
           <div>{!session ? signInButton : signOutButton}</div>
-          <Link href='/posts'>Posts</Link>
-          {session?.user.admin && <Link href='/posts/create'>Create Post</Link>}
-          <SearchForm />
+          <Link onClick={closeNavBar} href='/posts'>
+            Posts
+          </Link>
+          {session?.user.admin && (
+            <Link onClick={closeNavBar} href='/posts/create'>
+              Create Post
+            </Link>
+          )}
+          <SearchForm closeNavBar={closeNavBar} />
         </div>
       </nav>
     </div>
