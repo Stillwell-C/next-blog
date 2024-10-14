@@ -38,6 +38,8 @@ const PostCommentForm = ({ postId, authorId }: Props) => {
         name='content'
         value={commentContent}
         onChange={(e) => setCommentContent(e.target.value)}
+        maxLength={500}
+        autoComplete='off'
       />
       <input type='text' name='authorId' value={authorId} hidden readOnly />
       <input type='text' name='postId' value={postId} hidden readOnly />
