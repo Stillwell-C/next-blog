@@ -44,6 +44,8 @@ const PostForm = ({
     if (e.target.files && e.target.files[0]) {
       setImgUrl(URL.createObjectURL(e.target.files[0]));
     }
+
+    confirmPurgeButtonState();
   };
 
   const purgeImgFile = () => {
@@ -66,10 +68,16 @@ const PostForm = ({
         setImgUrl("");
       }
     }
+
+    confirmPurgeButtonState();
   };
 
   //이미지 삭제 버트 나타냄 여부
   useEffect(() => {
+    confirmPurgeButtonState();
+  }, [existingImgUrl, imgInputRef.current]);
+
+  const confirmPurgeButtonState = () => {
     if (
       existingImgUrl.length ||
       (imgInputRef?.current?.files && imgInputRef?.current?.files?.length > 0)
@@ -78,7 +86,7 @@ const PostForm = ({
     } else {
       setDisplayPurgeButton(false);
     }
-  }, [existingImgUrl, imgInputRef]);
+  };
 
   return (
     <div>
