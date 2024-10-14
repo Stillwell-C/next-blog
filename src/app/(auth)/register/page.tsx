@@ -35,6 +35,7 @@ const RegisterForm = () => {
               id='username'
               name='username'
               className='border border-black rounded-md p-4'
+              maxLength={30}
             />
           </div>
           <div className='flex flex-col'>
@@ -47,6 +48,7 @@ const RegisterForm = () => {
               id='password'
               name='password'
               className='border border-black rounded-md p-4'
+              maxLength={50}
             />
           </div>
           <div className='flex flex-col'>
@@ -59,6 +61,7 @@ const RegisterForm = () => {
               name='passwordConfirmation'
               id='passwordConfirmation'
               className='border border-black rounded-md p-4'
+              maxLength={50}
             />
           </div>
           <FormStatusButton buttonText='회원가입' />
