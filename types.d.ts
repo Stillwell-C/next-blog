@@ -9,6 +9,10 @@ interface FormStateType {
   success?: boolean;
 }
 
+interface UpdateImgFormStateType extends FormStateType {
+  imgUrl?: string;
+}
+
 interface RegisterFormStateType extends FormStateType {
   username?: string;
   password?: string;
