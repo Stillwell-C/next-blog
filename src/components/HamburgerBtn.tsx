@@ -14,13 +14,15 @@ const HamburgerBtn = ({ open, setOpen }: Props) => {
       aria-expanded={open}
     >
       <div
-        className={`rounded h-1 w-7 top-4  bg-black before:bg-black after:bg-black dark:bg-white dark:before:bg-white dark:after:bg-white absolute -mt-0.5 transition-all duration-700 before:content-[''] before:w-7 before:h-1 before:rounded before:absolute before:duration-700 before:transition-all before:-translate-x-3.5  after:w-7 after:rounded after:h-1 after:absolute after:duration-700 after:transition-all after:-translate-x-3.5 
-    ${
-      open
-        ? "bg-transparent dark:bg-transparent before:translate-y-0 before:rotate-45 after:translate-y-0 after:-rotate-45"
-        : `before:-translate-y-2.5 after:translate-y-2.5`
-    } 
-    }`}
+        className={`rounded h-1 w-7 top-4 absolute -mt-0.5 transition-all duration-700 
+            ${open ? "bg-transparent" : "bg-black dark:bg-white"} 
+            before:content-[''] before:w-7 before:h-1 before:rounded before:absolute before:duration-700 before:transition-all before:-translate-x-3.5 before:bg-black dark:before:bg-white 
+            after:w-7 after:rounded after:h-1 after:absolute after:duration-700 after:transition-all after:-translate-x-3.5 after:bg-black dark:after:bg-white 
+            ${
+              open
+                ? "before:translate-y-0 before:rotate-45 after:translate-y-0 after:-rotate-45"
+                : "before:-translate-y-2.5 after:translate-y-2.5"
+            }`}
       ></div>
     </button>
   );
