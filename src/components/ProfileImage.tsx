@@ -23,7 +23,7 @@ const ProfileImage = ({ imgUrl, size = 40 }: Props) => {
         width={size}
         height={size}
         alt={`프로필 사진`}
-        className='rounded-full aspect-square object-cover overflow-hidden border border-black'
+        className='rounded-full aspect-square object-cover overflow-hidden border border-black dark:bg-slate-700'
       ></Image>
     );
   }
