@@ -8,7 +8,7 @@ type Props = {
 const FormStatusSpinner = ({ size = 35 }: Props) => {
   const { pending } = useFormStatus();
 
-  if (pending) return <ClipLoader size={size} />;
+  if (pending) return <ClipLoader color="#4B5563'" size={size} />;
 };
 
 export default FormStatusSpinner;
