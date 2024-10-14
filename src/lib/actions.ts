@@ -38,24 +38,43 @@ export const registerUser = async (
     Object.fromEntries(formData);
 
   if (!username || !password || !passwordConfirmation) {
-    return { error: true, errorMsg: "Must inclue all fields" };
+    return { error: true, errorMsg: "모든 입력란을 작성해야 합니다." };
+  }
+
+  if (
+    typeof username !== "string" ||
+    typeof password !== "string" ||
+    typeof passwordConfirmation !== "string"
+  ) {
+    return { error: true, errorMsg: "비정상적인 데이터가 전달되었습니다." };
   }
 
   if (password !== passwordConfirmation) {
     return { error: true, errorMsg: "비밀번호 일치하지 않습니다" };
   }
 
+  if (password.length < 8 || password.length > 50) {
+    return {
+      error: true,
+      errorMsg: "비밀번호는 8자에서 50자 사이여야 합니다.",
+    };
+  }
+
+  if (username.length < 3 || username.length > 30) {
+    return {
+      error: true,
+      errorMsg: "사용자 아이디는 4자에서 30자 사이여야 합니다.",
+    };
+  }
+
   try {
-    //TODO TEXT INSENSITIVE
     const user = await prisma.user.findFirst({
-      where: { username: username as string },
+      where: { username: username },
     });
 
     if (user) {
       return { error: true, errorMsg: "중복 아이디가 확인되었습니다." };
     }
-
-    //TODO: CHECK user credential length, etc.
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password as string, salt);
@@ -69,8 +88,7 @@ export const registerUser = async (
 
     return { success: true };
   } catch (err) {
-    console.log(err);
-    return { error: true, errorMsg: "Something went wrong." };
+    return { error: true, errorMsg: "문제가 발생했습니다." };
   }
 };
 
@@ -87,14 +105,21 @@ export const credentialsLogin = async (
   const { username, password, redirectUrl } = Object.fromEntries(formData);
 
   if (!username || !password) {
-    return { error: true, errorMsg: "Please input username and password." };
+    return {
+      error: true,
+      errorMsg: "아이디와 비밀번호를 모두 입력해야 합니다.",
+    };
+  }
+
+  if (typeof username !== "string" || typeof password !== "string") {
+    return { error: true, errorMsg: "비정상적인 데이터가 전달되었습니다." };
   }
 
   const redirectLink = redirectUrl?.toString()?.length ? redirectUrl : "/";
 
   try {
     const user = await prisma.user.findUnique({
-      where: { username: username as string },
+      where: { username: username },
     });
 
     if (user === null) {
@@ -102,7 +127,7 @@ export const credentialsLogin = async (
     }
 
     const passwordCheck = await bcrypt.compare(
-      password as string,
+      password,
       user.password as string
     );
 
@@ -123,7 +148,7 @@ export const credentialsLogin = async (
     if (isRedirectError(err)) {
       throw err;
     }
-    return { error: true, errorMsg: "Something went wrong" };
+    return { error: true, errorMsg: "문제가 발생했습니다." };
   }
 };
 
@@ -139,11 +164,8 @@ export const getUser = async (userId: string) => {
       },
     });
 
-    console.log("getUser ", user);
-
     return user;
   } catch (err) {
-    console.log(err);
     return null;
   }
 };
@@ -196,6 +218,19 @@ export const createPost = async (
     return { error: true, errorMsg: "인증 자격 증명이 없습니다." };
   }
 
+  if (
+    typeof title !== "string" ||
+    (subTitle && typeof subTitle !== "string") ||
+    typeof content !== "string" ||
+    typeof authorId !== "string"
+  ) {
+    return { error: true, errorMsg: "비정상적인 데이터가 전달되었습니다." };
+  }
+
+  if (content.length > 15000) {
+    return { error: true, errorMsg: "글은 15000자 이하여야 합니다." };
+  }
+
   let imgUrl = null;
 
   const imageFormData = imageUpload as File;
@@ -214,24 +249,16 @@ export const createPost = async (
     }
   }
 
-  const parsedContent = formatPostContent(content as string);
-
-  const data: PostFormStateType = {
-    title: title as string,
-    subTitle: subTitle as string,
-    content: parsedContent as string,
-    authorId: authorId as string,
-    imgUrl,
-  };
+  const parsedContent = formatPostContent(content);
 
   try {
     await prisma.post.create({
       data: {
-        title: data.title,
-        subTitle: data.subTitle,
-        content: data.content,
-        authorId: data.authorId,
-        imgUrl: data.imgUrl,
+        title: title,
+        subTitle: subTitle,
+        content: parsedContent,
+        authorId: authorId,
+        imgUrl: imgUrl,
       },
     });
 
@@ -249,7 +276,6 @@ export const getPosts = async ({
   const skip = page * take - take;
 
   try {
-    //TODO: Remove count
     const postCount = await prisma.post.count();
     const posts = await prisma.post.findMany({
       orderBy: {
@@ -331,7 +357,7 @@ export const editPost = async (
     } = Object.fromEntries(formData);
 
     if (!postId) {
-      return { error: true, errorMsg: "해당 포스팅을 찾을 수 없습니다." };
+      return { error: true, errorMsg: "해당 블로그 글을 찾을 수 없습니다." };
     }
 
     if (!title || !content) {
@@ -340,6 +366,16 @@ export const editPost = async (
 
     if (!editorId) {
       return { error: true, errorMsg: "인증 자격 증명이 없습니다." };
+    }
+
+    if (
+      typeof postId !== "string" ||
+      typeof title !== "string" ||
+      (subTitle && typeof subTitle !== "string") ||
+      typeof content !== "string" ||
+      typeof editorId !== "string"
+    ) {
+      return { error: true, errorMsg: "비정상적인 데이터가 전달되었습니다." };
     }
 
     let imgUrl = (existingImgUrl as string) || null;
@@ -362,25 +398,16 @@ export const editPost = async (
 
     const parsedContent = formatPostContent(content as string);
 
-    const data = {
-      id: postId as string,
-      title: title as string,
-      subTitle: subTitle as string,
-      content: parsedContent,
-      editorId: editorId as string,
-      imgUrl,
-    };
-
     await prisma.post.update({
       where: {
-        id: data.id,
+        id: postId,
       },
       data: {
-        editorId: data.editorId,
-        title: data.title,
-        subTitle: data.subTitle,
-        content: data.content,
-        imgUrl: data.imgUrl,
+        editorId: editorId,
+        title: title,
+        subTitle: subTitle,
+        content: parsedContent,
+        imgUrl: imgUrl,
       },
     });
 
@@ -403,7 +430,7 @@ export const deletePost = async (
     const { postId, editorId } = Object.fromEntries(formData);
 
     if (!postId) {
-      return { error: true, errorMsg: "해당 포스팅을 찾을 수 없습니다." };
+      return { error: true, errorMsg: "해당 블로그 글을 찾을 수 없습니다." };
     }
 
     if (!editorId) {
@@ -449,6 +476,10 @@ export const createSubPost = async (
 
   if (!authorId) {
     return { error: true, errorMsg: "인증 자격 증명이 없습니다." };
+  }
+
+  if (content.length > 1500) {
+    return { error: true, errorMsg: "답글은 1500자 이하여야 합니다." };
   }
 
   const parsedContent = formatPostContent(content as string);
@@ -561,11 +592,15 @@ export const createComment = async (
     }
 
     if (!postId) {
-      return { error: true, errorMsg: "해당 포스팅을 찾을 수 없습니다." };
+      return { error: true, errorMsg: "해당 블로그 글을 찾을 수 없습니다." };
     }
 
     if (!authorId) {
       return { error: true, errorMsg: "댓글을 남기려면 로그인 해주세요." };
+    }
+
+    if (content.length > 500) {
+      return { error: true, errorMsg: "댓글은 500자 이하여야 합니다." };
     }
 
     await prisma.comment.create({
@@ -671,7 +706,11 @@ export const createSubComment = async (
     }
 
     if (!postId.length) {
-      return { error: true, errorMsg: "해당 포스팅을 찾을 수 없습니다." };
+      return { error: true, errorMsg: "해당 블로그 글을 찾을 수 없습니다." };
+    }
+
+    if (content.length > 500) {
+      return { error: true, errorMsg: "대댓글은 500자 이하여야 합니다." };
     }
 
     await prisma.subComment.create({
