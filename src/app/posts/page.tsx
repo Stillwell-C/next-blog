@@ -1,5 +1,6 @@
-import PostResults from "@/components/PaginatedPostResults";
-import { getPosts } from "@/lib/actions";
+import GetPostResults from "@/components/GetPostResults";
+import PostResultsSkeleton from "@/components/PostResultsSkeleton";
+import { Suspense } from "react";
 
 type Props = {
   searchParams: {
@@ -7,11 +8,12 @@ type Props = {
   };
 };
 
-const PostsPage = async ({ searchParams }: Props) => {
-  const page = searchParams?.page ? parseInt(searchParams?.page) : 1;
-  const postData = await getPosts({ page });
-
-  return <PostResults postData={postData} page={page} />;
+const PostsPage = async ({ searchParams: { page } }: Props) => {
+  return (
+    <Suspense fallback={<PostResultsSkeleton />}>
+      <GetPostResults page={page} />
+    </Suspense>
+  );
 };
 
 export default PostsPage;
