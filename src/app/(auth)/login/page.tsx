@@ -31,6 +31,7 @@ const LoginForm = () => {
               name='username'
               className='border border-black rounded-md p-4'
               autoComplete='off'
+              maxLength={30}
             />
           </div>
           <div className='flex flex-col'>
@@ -44,6 +45,7 @@ const LoginForm = () => {
               name='password'
               className='border border-black rounded-md p-4'
               autoComplete='off'
+              maxLength={50}
             />
           </div>
           <FormStatusButton buttonText='로그인' />
