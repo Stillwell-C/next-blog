@@ -13,27 +13,36 @@ const page = async () => {
   const user = await getUser(session?.user?.id);
 
   return (
-    <div className='mx-auto max-w-3xl h-full flex flex-col items-center p-4'>
-      <h2 className='text-center text-xl'>Profile</h2>
-      <div className='border-b border-t border-black p-4 mt-10 w-full'>
-        <h3 className='text-lg'>프로필 이미지 변경</h3>
+    <div className='mx-auto max-w-3xl h-full flex flex-col items-center p-6'>
+      <h2 className='text-center text-2xl font-semibold'>Profile</h2>
+
+      <div className='border border-gray-300 rounded-lg shadow-md p-6 mt-10 w-full text-gray-700 dark:text-gray-400'>
+        <h3 className='text-xl font-semibold mb-4'>프로필 이미지 변경</h3>
         <ProfileForm imgUrl={user?.imgUrl} userId={session?.user?.id} />
       </div>
-      <div className='w-full p-4 flex flex-col justify-start'>
-        <h3 className='text-lg mb-4'>계정 정보</h3>
-        <div className='flex gap-4'>
-          <p>사용자 아이디:</p>
+      <div className='border border-gray-300 rounded-lg shadow-md p-6 mt-8 w-full'>
+        <h3 className='text-xl font-semibold mb-4 text-gray-700 dark:text-gray-400'>
+          계정 정보
+        </h3>
+        <div className='flex gap-4 mb-2'>
+          <p className='font-medium text-gray-600 dark:text-gray-500'>
+            사용자 아이디:
+          </p>
           <p>{session.user.username}</p>
         </div>
         {user?.createdAt && (
-          <div className='flex gap-4'>
-            <p>사용자 아이디:</p>
+          <div className='flex gap-4 mb-2'>
+            <p className='font-medium text-gray-600 dark:text-gray-500'>
+              사용자 아이디:
+            </p>
             <p>{formatDate(user?.createdAt)}</p>
           </div>
         )}
         {user?.updatedAt && (
-          <div className='flex gap-4'>
-            <p>수정 일자:</p>
+          <div className='flex gap-4 mb-2'>
+            <p className='font-medium text-gray-600 dark:text-gray-500'>
+              수정 일자:
+            </p>
             <p>{formatDate(user?.updatedAt)}</p>
           </div>
         )}
