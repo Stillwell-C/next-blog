@@ -40,6 +40,7 @@ const CreatePostReplyForm = ({ authorId, postId }: Props) => {
           id='content'
           name='content'
           className='border border-black rounded-md p-4 resize-y h-44'
+          maxLength={1500}
         ></textarea>
       </div>
       <FormStatusButton buttonText={"제출"} />
