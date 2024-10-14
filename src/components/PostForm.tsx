@@ -137,6 +137,8 @@ const PostForm = ({
             name='title'
             defaultValue={post?.title}
             className='border border-black rounded-md p-4'
+            maxLength={250}
+            autoComplete='off'
           />
         </div>
         <div className='flex flex-col'>
@@ -150,6 +152,8 @@ const PostForm = ({
             defaultValue={post?.subTitle || ""}
             name='subTitle'
             className='border border-black rounded-md p-4'
+            maxLength={300}
+            autoComplete='off'
           />
         </div>
         <div className='flex flex-col'>
@@ -162,6 +166,7 @@ const PostForm = ({
             name='content'
             defaultValue={post?.content.split("\n").join("\n\n")}
             className='border border-black rounded-md p-4 resize-y h-44'
+            maxLength={15000}
           ></textarea>
         </div>
         <FormStatusButton buttonText={buttonText} />
