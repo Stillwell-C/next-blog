@@ -15,7 +15,7 @@ const RegisterForm = () => {
 
   useEffect(() => {
     if (state?.success) {
-      router.push("/auth/login");
+      router.push("/login");
     }
   });
 
