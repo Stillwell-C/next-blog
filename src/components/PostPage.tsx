@@ -44,21 +44,22 @@ const PostPage = async ({ slug }: Props) => {
             />
           </div>
         )}
-        <h2 className='text-2xl font-semibold'>{post?.title}</h2>
-        <h3 className='text-lg'>{post?.subTitle}</h3>
+        <h2 className='text-3xl font-semibold'>{post?.title}</h2>
+        <h3 className='text-xl font-medium text-gray-700'>{post?.subTitle}</h3>
         <div className='mb-8'>
-          <div className='flex gap-1 items-center'>
+          <div className='flex gap-1 items-center text-gray-700'>
             <RiBook2Fill />
             <span>읽기 시간: {readingMinutes}분</span>
           </div>
-          <div className='flex gap-4'>
+          <div className='flex gap-4 text-sm text-gray-500'>
             <span>{post?.author?.username}</span>
             <span>&#x2022;</span>
             <span>{displayDate}</span>
           </div>
           {post?.editor?.username && (
-            <div className='flex gap-4'>
+            <div className='flex gap-4 text-sm text-gray-500'>
               <span>최신 업데이트</span>
+              <span>&#x2022;</span>
               <span>{post?.editor?.username}</span>
               <span>&#x2022;</span>
               <span>{displayEditDate}</span>
