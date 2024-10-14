@@ -57,6 +57,7 @@ const SubCommentForm = ({
             className='p-2 w-full border-black rounded outline-none'
             autoComplete='off'
             ref={inputRef}
+            maxLength={500}
           />
         </div>
         <FormStatusButton buttonText='제출' />
