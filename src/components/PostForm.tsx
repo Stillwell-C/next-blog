@@ -136,7 +136,7 @@ const PostForm = ({
             id='title'
             name='title'
             defaultValue={post?.title}
-            className='border border-black rounded-md p-4'
+            className='border border-black dark:border-slate-700 rounded-md p-4'
             maxLength={250}
             autoComplete='off'
           />
@@ -151,7 +151,7 @@ const PostForm = ({
             id='subTitle'
             defaultValue={post?.subTitle || ""}
             name='subTitle'
-            className='border border-black rounded-md p-4'
+            className='border border-black dark:border-slate-700 rounded-md p-4'
             maxLength={300}
             autoComplete='off'
           />
@@ -165,7 +165,7 @@ const PostForm = ({
             id='content'
             name='content'
             defaultValue={post?.content.split("\n").join("\n\n")}
-            className='border border-black rounded-md p-4 resize-y h-44'
+            className='border border-black dark:border-slate-700 rounded-md p-4 resize-y h-44'
             maxLength={15000}
           ></textarea>
         </div>

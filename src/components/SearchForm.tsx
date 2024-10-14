@@ -35,7 +35,7 @@ const SearchForm = ({ closeNavBar }: Props) => {
           className='md:absolute md:top-10 md:-translate-x-60'
           onSubmit={handleSearch}
         >
-          <div className='flex border border-black dark:border-white rounded p-1'>
+          <div className='flex border border-black dark:border-slate-700 rounded p-1'>
             <button
               className='p-1'
               type='button'
@@ -72,7 +72,7 @@ const SearchForm = ({ closeNavBar }: Props) => {
             placeholder='블로그 검색'
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className='outline-none border-b border-black dark:border-white w-36 text-lg px-2 py-1'
+            className='outline-none border-b border-black dark:border-slate-700 w-36 text-lg px-2 py-1'
           />
           <button className='p-1' type='submit'>
             <IoSearch />

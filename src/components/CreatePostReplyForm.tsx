@@ -39,7 +39,7 @@ const CreatePostReplyForm = ({ authorId, postId }: Props) => {
           placeholder='내용'
           id='content'
           name='content'
-          className='border border-black rounded-md p-4 resize-y h-44'
+          className='border border-black dark:border-slate-700 rounded-md p-4 resize-y h-44'
           maxLength={1500}
         ></textarea>
       </div>

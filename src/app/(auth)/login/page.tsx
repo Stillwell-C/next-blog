@@ -16,7 +16,7 @@ const LoginForm = () => {
 
   return (
     <section className='p-8'>
-      <div className='mx-auto p-6 max-w-xl flex flex-col border gap-4 border-solid border-black rounded-md'>
+      <div className='mx-auto p-6 max-w-xl flex flex-col border gap-4 border-solid border-black dark:border-slate-700 rounded-md'>
         <h2 className='text-center text-2xl bold'>로그인</h2>
         <form action={formAction} className='flex flex-col gap-4'>
           <input name='redirectUrl' value={redirectUrl} hidden readOnly />
@@ -29,7 +29,7 @@ const LoginForm = () => {
               placeholder='아이디'
               id='username'
               name='username'
-              className='border border-black rounded-md p-4'
+              className='border border-black dark:border-slate-700 rounded-md p-4'
               maxLength={30}
             />
           </div>
@@ -42,7 +42,7 @@ const LoginForm = () => {
               placeholder='비밀번호'
               id='password'
               name='password'
-              className='border border-black rounded-md p-4'
+              className='border border-black dark:border-slate-700 rounded-md p-4'
               maxLength={50}
             />
           </div>

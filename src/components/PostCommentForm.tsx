@@ -34,7 +34,7 @@ const PostCommentForm = ({ postId, authorId }: Props) => {
     <form action={formAction} className='flex flex-col gap-4'>
       <h4 className='text-xl'>댓글 쓰기</h4>
       <input
-        className='border border-black rounded-md p-2'
+        className='border border-black dark:border-slate-700 rounded-md p-2'
         name='content'
         value={commentContent}
         onChange={(e) => setCommentContent(e.target.value)}
