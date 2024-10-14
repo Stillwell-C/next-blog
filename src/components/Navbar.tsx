@@ -1,32 +1,23 @@
 import Link from "next/link";
 import { auth } from "@/lib/auth";
-import { handleLogout } from "../lib/actions";
-import RedirectLink from "./RedirectLink";
-import SearchForm from "./SearchForm";
+import NavbarLinks from "./NavbarLinks";
+import NavbarMobile from "./NavbarMobile";
 
 const Navbar = async () => {
   const session = await auth();
 
-  const signInButton = <RedirectLink pathname='/login' linkText='로그인' />;
-  const signOutButton = (
-    <form action={handleLogout}>
-      <button>Sign Out</button>
-    </form>
-  );
-
   return (
-    <nav className='w-full flex justify-around p-8'>
-      <div>links</div>
-      <h1>
-        <Link href={"/"} className='text-3xl'>
-          Next Blog
-        </Link>
-      </h1>
-      <div className='flex'>
-        <SearchForm />
-        <div>{!session ? signInButton : signOutButton}</div>
+    <div className='w-full flex justify-around p-8'>
+      <div className='text-center'>
+        <h1>
+          <Link href={"/"} className='text-4xl'>
+            Next Blog
+          </Link>
+        </h1>
       </div>
-    </nav>
+      <NavbarLinks session={session} />
+      <NavbarMobile session={session} />
+    </div>
   );
 };
 
