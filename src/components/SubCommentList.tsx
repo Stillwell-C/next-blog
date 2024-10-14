@@ -75,7 +75,7 @@ const SubCommentList = ({ comment }: Props) => {
           </button>
         </div>
       )}
-      {session?.user?.id?.length && (
+      {session?.user?.username?.length && (
         <div>
           <button
             className='mb-2'
