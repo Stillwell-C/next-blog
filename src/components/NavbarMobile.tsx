@@ -8,6 +8,7 @@ import SearchForm from "./SearchForm";
 import RedirectLink from "./RedirectLink";
 import { handleLogout } from "@/lib/actions";
 import { Session } from "next-auth";
+import ToggleThemes from "./ToggleThemes";
 
 type Props = { session: Session | null };
 
@@ -22,8 +23,9 @@ const NavbarMobile = ({ session }: Props) => {
   );
 
   return (
-    <div className='block md:hidden'>
-      <div className='fixed z-50'>
+    <div className='flex md:hidden'>
+      <div className='flex items-center gap-4'>
+        <ToggleThemes />
         <HamburgerBtn open={openBar} setOpen={setOpenBar} />
       </div>
       <nav
@@ -33,7 +35,7 @@ const NavbarMobile = ({ session }: Props) => {
           openBar ? "" : "hidden"
         }`}
       >
-        <div className='w-100 p-8 flex flex-col items-center bg-white'>
+        <div className='w-100 p-8 flex flex-col items-center bg-white dark:bg-gray-900 text-2xl'>
           {session && <NavbarUserInfo session={session} />}
           <div>{!session ? signInButton : signOutButton}</div>
           <Link href='/posts'>Posts</Link>
