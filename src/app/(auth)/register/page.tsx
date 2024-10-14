@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import FormStatusButton from "@/components/FormStatusSubmitButton";
 import FormStateError from "@/components/FormStateError";
+import GithubLoginForm from "@/components/GithubLoginForm";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -69,11 +70,7 @@ const RegisterForm = () => {
         >
           로그인
         </Link>
-        <form action={handleGitHubLogin}>
-          <button className='bg-black text-white w-full p-3 rounded'>
-            GitHub 로그인
-          </button>
-        </form>
+        <GithubLoginForm />
       </div>
     </section>
   );

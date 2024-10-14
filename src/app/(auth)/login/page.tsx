@@ -6,6 +6,7 @@ import { credentialsLogin, handleGitHubLogin } from "@/lib/actions";
 import FormStatusButton from "@/components/FormStatusSubmitButton";
 import FormStateError from "@/components/FormStateError";
 import { useSearchParams } from "next/navigation";
+import GithubLoginForm from "@/components/GithubLoginForm";
 
 const LoginForm = () => {
   const [state, formAction] = useFormState(credentialsLogin, null);
@@ -48,16 +49,11 @@ const LoginForm = () => {
         </form>
         <Link
           href='/register'
-          className='border border-black rounded text-center p-3 w-full'
+          className='border border-black dark:border-slate-700 rounded text-center p-3 w-full'
         >
           회원가입
         </Link>
-        <form action={handleGitHubLogin}>
-          <input name='redirectUrl' value={redirectUrl} hidden readOnly />
-          <button className='bg-black text-white w-full p-3 rounded'>
-            GitHub 로그인
-          </button>
-        </form>
+        <GithubLoginForm />
       </div>
     </section>
   );
