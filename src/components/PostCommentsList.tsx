@@ -65,7 +65,7 @@ const PostCommentsList = ({ initialComments, postId }: Props) => {
         <button
           disabled={loading}
           onClick={loadMoreComments}
-          className='mt-8 disabled:cursor-not-allowed bg-black white disabled:opacity-50 text-white items-center justify-center py-2 px-8 rounded'
+          className='mt-8 disabled:cursor-not-allowed bg-black dark:bg-slate-700 white disabled:opacity-50 text-white items-center justify-center py-2 px-8 rounded'
         >
           댓글 더 보기
         </button>
