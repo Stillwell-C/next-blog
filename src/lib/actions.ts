@@ -60,7 +60,7 @@ export const registerUser = async (
     };
   }
 
-  if (username.length < 3 || username.length > 30) {
+  if (username.length < 4 || username.length > 30) {
     return {
       error: true,
       errorMsg: "사용자 아이디는 4자에서 30자 사이여야 합니다.",
@@ -68,7 +68,7 @@ export const registerUser = async (
   }
 
   try {
-    const user = await prisma.user.findFirst({
+    const user = await prisma.user.findUnique({
       where: { username: username },
     });
 
@@ -88,6 +88,10 @@ export const registerUser = async (
 
     return { success: true };
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - registerUser: ", err);
+    }
+
     return { error: true, errorMsg: "문제가 발생했습니다." };
   }
 };
@@ -148,6 +152,11 @@ export const credentialsLogin = async (
     if (isRedirectError(err)) {
       throw err;
     }
+
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - credentialsLogin: ", err);
+    }
+
     return { error: true, errorMsg: "문제가 발생했습니다." };
   }
 };
@@ -166,6 +175,10 @@ export const getUser = async (userId: string) => {
 
     return user;
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - getUser: ", err);
+    }
+
     return null;
   }
 };
@@ -208,6 +221,10 @@ export const updateUserImg = async (
 
     return { success: true, imgUrl: res.imgUrl };
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - updateUserImg: ", err);
+    }
+
     return { error: true, errorMsg: "이미지 업로드 에로가 발생했습니다" };
   }
 };
@@ -271,7 +288,10 @@ export const createPost = async (
         return { error: true, errorMsg: "이미지 업로드 에로가 발생했습니다" };
       }
     } catch (err) {
-      console.log(err);
+      if (process.env.NODE_ENV !== "production") {
+        console.error("Error - createPost - imgUpload: ", err);
+      }
+
       return { error: true, errorMsg: "이미지 업로드 에로가 발생했습니다" };
     }
   }
@@ -291,6 +311,10 @@ export const createPost = async (
 
     return { success: true };
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - createPost: ", err);
+    }
+
     return { error: true, errorMsg: "에로가 발생했습니다" };
   }
 };
@@ -332,6 +356,10 @@ export const getPosts = async ({
 
     return { posts, currentPage: page, totalCount: postCount, totalPages };
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - getPosts: ", err);
+    }
+
     if (err instanceof Error) {
       throw new Error(err.message);
     }
@@ -361,6 +389,10 @@ export const getPost = async (postId: string) => {
 
     return post;
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - getPost: ", err);
+    }
+
     if (err instanceof Error) {
       throw new Error(err.message);
     }
@@ -464,6 +496,10 @@ export const editPost = async (
 
     return { success: true };
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - editPost: ", err);
+    }
+
     if (err instanceof Error) {
       return { error: true, errorMsg: err.message };
     }
@@ -498,6 +534,10 @@ export const deletePost = async (
 
     return { success: true };
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - deletePost: ", err);
+    }
+
     if (err instanceof Error) {
       return { error: true, errorMsg: err.message };
     }
@@ -546,6 +586,10 @@ export const createSubPost = async (
 
     return { success: true };
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - createSubPost: ", err);
+    }
+
     return { error: true, errorMsg: "에로가 발생했습니다" };
   }
 };
@@ -562,6 +606,10 @@ export const countSubPosts = async (postId: string) => {
       },
     });
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - countSubPosts: ", err);
+    }
+
     if (err instanceof Error) {
       throw new Error(err.message);
     }
@@ -614,6 +662,10 @@ export const getSubPosts = async ({
       totalPages,
     };
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - getSubPosts: ", err);
+    }
+
     if (err instanceof Error) {
       throw new Error(err.message);
     }
@@ -662,6 +714,10 @@ export const createComment = async (
 
     return { success: true };
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - createComment: ", err);
+    }
+
     if (err instanceof Error) {
       return { error: true, errorMsg: err.message };
     }
@@ -718,6 +774,10 @@ export const getComments = async ({
       totalPages,
     };
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - getComments: ", err);
+    }
+
     if (err instanceof Error) {
       throw new Error(err.message);
     }
@@ -772,6 +832,10 @@ export const createSubComment = async (
 
     return { success: true };
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - createSubComment: ", err);
+    }
+
     if (err instanceof Error) {
       return { error: true, errorMsg: err.message };
     }
@@ -828,6 +892,10 @@ export const getSubComments = async ({
       totalPages,
     };
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - getSubComments: ", err);
+    }
+
     if (err instanceof Error) {
       throw new Error(err.message);
     }
@@ -937,6 +1005,10 @@ export const searchPosts = async ({
 
     return { posts, currentPage: page, totalCount: postCount, totalPages };
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - searchPosts: ", err);
+    }
+
     if (err instanceof Error) {
       throw new Error(err.message);
     }
