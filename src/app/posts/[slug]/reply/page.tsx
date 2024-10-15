@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 const page = async ({ params: { slug } }: Props) => {
   const session = await auth();
+
   return (
     <CreatePostReplyForm authorId={session?.user?.id || ""} postId={slug} />
   );

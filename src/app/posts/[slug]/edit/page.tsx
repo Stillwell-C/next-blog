@@ -2,6 +2,7 @@ import { getPost } from "@/lib/actions";
 import { auth } from "@/lib/auth";
 import EditPostForm from "@/components/EditPostForm";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: {
@@ -17,6 +18,10 @@ export const metadata: Metadata = {
 const page = async ({ params: { slug } }: Props) => {
   const post = await getPost(slug);
   const session = await auth();
+
+  if (!post) {
+    notFound();
+  }
 
   return <EditPostForm editorId={session?.user?.id || ""} post={post} />;
 };

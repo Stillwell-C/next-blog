@@ -27,7 +27,6 @@ const PostPage = async ({ slug }: Props) => {
   const readingMinutes = Math.ceil((post?.content.length || 0) / 200);
 
   if (!post) {
-    //TODO: REDIRECT TO ERROR PAGE
     notFound();
   }
 
