@@ -46,7 +46,7 @@ export const createPost = async (
   if (!user) {
     return { error: true, errorMsg: "포스트를 작성하려면 로그인해야 합니다." };
   }
-  if (user?.role === "ADMIN") {
+  if (user?.role !== "ADMIN") {
     return {
       error: true,
       errorMsg: "Admin 등급인 계정만 포스트를 작성할 수 있습니다.",
@@ -57,16 +57,16 @@ export const createPost = async (
 
   const imageFormData = imageUpload as File;
 
-  const imageCheck = isImageFile(imageFormData);
-
-  if (!imageCheck) {
-    return {
-      error: true,
-      errorMsg: "에로가 발생했습니다. 파일 형식은 이미지 파일이어야 합니다.",
-    };
-  }
-
   if (imageFormData.size > 0) {
+    const imageCheck = isImageFile(imageFormData);
+
+    if (!imageCheck) {
+      return {
+        error: true,
+        errorMsg: "에로가 발생했습니다. 파일 형식은 이미지 파일이어야 합니다.",
+      };
+    }
+
     try {
       const res = await uploadFileToCloudinaryFromAction(imageFormData);
 
@@ -96,6 +96,9 @@ export const createPost = async (
         imgUrl: imgUrl,
       },
     });
+
+    revalidatePath("/");
+    revalidatePath("/posts");
 
     return { success: true };
   } catch (err) {
@@ -241,7 +244,7 @@ export const editPost = async (
     }
 
     const user = await getUser(editorId);
-    if (user?.role === "ADMIN") {
+    if (user?.role !== "ADMIN") {
       return {
         error: true,
         errorMsg: "Admin 등급인 계정만 포스트를 수정할 수 있습니다.",
@@ -252,16 +255,17 @@ export const editPost = async (
 
     const imageFormData = imageUpload as File;
 
-    const imageCheck = isImageFile(imageFormData);
-
-    if (!imageCheck) {
-      return {
-        error: true,
-        errorMsg: "에로가 발생했습니다. 파일 형식은 이미지 파일이어야 합니다.",
-      };
-    }
-
     if (imageFormData.size > 0) {
+      const imageCheck = isImageFile(imageFormData);
+
+      if (!imageCheck) {
+        return {
+          error: true,
+          errorMsg:
+            "에로가 발생했습니다. 파일 형식은 이미지 파일이어야 합니다.",
+        };
+      }
+
       try {
         const res = await uploadFileToCloudinaryFromAction(imageFormData);
 
@@ -338,7 +342,7 @@ export const deletePost = async (
         errorMsg: "포스트를 삭제하려면 로그인해야 합니다.",
       };
     }
-    if (user?.role === "ADMIN") {
+    if (user?.role !== "ADMIN") {
       return {
         error: true,
         errorMsg: "Admin 등급인 계정만 포스트를 삭제할 수 있습니다.",
@@ -350,6 +354,9 @@ export const deletePost = async (
         id: postId,
       },
     });
+
+    revalidatePath("/");
+    revalidatePath("/posts");
 
     return { success: true };
   } catch (err) {
