@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import FormStatusButton from "./FormStatusSubmitButton";
 import FormStateError from "./FormStateError";
@@ -19,6 +19,7 @@ const SubCommentForm = ({
   authorId,
 }: Props) => {
   const [state, formAction] = useFormState(createSubComment, null);
+  const [subCommentContent, setSubCommentContent] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -57,10 +58,15 @@ const SubCommentForm = ({
             className='p-2 w-full  rounded outline-none'
             autoComplete='off'
             ref={inputRef}
+            value={subCommentContent}
+            onChange={(e) => setSubCommentContent(e.target.value)}
             maxLength={500}
           />
         </div>
-        <FormStatusButton buttonText='제출' />
+        <FormStatusButton
+          buttonText='제출'
+          disable={subCommentContent.length < 1}
+        />
       </div>
       <FormStateError formState={state} />
     </form>
