@@ -25,7 +25,7 @@ const PostPage = async ({ slug }: Props) => {
   const displayDate = post?.createdAt ? formatDate(post?.createdAt) : "";
   const displayEditDate = post?.updatedAt ? formatDate(post?.updatedAt) : "";
 
-  const readingMinutes = Math.ceil((post?.content.length || 0) / 200);
+  const readingMinutes = Math.ceil((post?.content.length || 0) / 300);
 
   if (!post) {
     notFound();
