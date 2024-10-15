@@ -6,12 +6,13 @@
 
 애플리케이션은 [여기](https://next-blog-rust-zeta.vercel.app/)에서 사용할 수 있습니다.
 
-##기술 스택
-프론트엔드: Next.js, React, Tailwind CSS
-백엔드: Next.js API Routes, Next.js Server Actions, Prisma, PostgreSQL, Supabase
-인증: NextAuth, Bcrypt
-배포: Vercel
-기타: Cloudinary, Next-Themes
+## 기술 스택
+
+- 프론트엔드: Next.js, React, Tailwind CSS
+- 백엔드: Next.js API Routes, Next.js Server Actions, Prisma, PostgreSQL, Supabase
+- 인증: NextAuth, Bcrypt
+- 배포: Vercel
+- 기타: Cloudinary, Next-Themes
 
 ## 프로젝트 실행 방법
 
@@ -24,7 +25,7 @@
 3. **개발 서버 실행**:
    개발 서버를 시작합니다:
    `npm run dev`
-   서버가 실행되면 브라우저에서 http://localhost:3000으로 이동하여 애플리케이션을 확인할 수 있습니다.
+   서버가 실행되면 브라우저에서 http://localhost:3000 으로 이동하여 애플리케이션을 확인할 수 있습니다.
 4. **프로덕션 빌드**:
    애플리케이션을 프로덕션 모드로 빌드하려면 다음 명령어를 실행합니다:
    `npm run build`
