@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 import FormStatusButton from "./FormStatusSubmitButton";
 import FormStateError from "./FormStateError";
-import { createSubComment } from "@/lib/actions";
 import { useFormState } from "react-dom";
+import { createSubComment } from "@/lib/actions/subCommentActions";
 
 type Props = {
   setShowState: React.Dispatch<React.SetStateAction<boolean>>;

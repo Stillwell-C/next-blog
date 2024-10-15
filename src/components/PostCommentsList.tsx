@@ -1,9 +1,9 @@
 "use client";
 
-import { getComments } from "@/lib/actions";
 import { useState } from "react";
 import PostCommentCard from "./PostCommentCard";
 import { nextPageConfirmation } from "@/lib/utils";
+import { getComments } from "@/lib/actions/commentActions";
 
 type Props = {
   initialComments:

@@ -1,11 +1,11 @@
 "use client";
 
-import { deletePost, editPost } from "@/lib/actions";
 import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import PostForm from "./PostForm";
 import { useRouter } from "next/navigation";
 import DeletePostForm from "./DeletePostForm";
+import { deletePost, editPost } from "@/lib/actions/postActions";
 
 type Props = {
   editorId: string;

@@ -1,5 +1,5 @@
 import PostResults from "@/components/PaginatedPostResults";
-import { searchPosts } from "@/lib/actions";
+import { searchPosts } from "@/lib/actions/postActions";
 
 type Props = {
   params: { slug: string };

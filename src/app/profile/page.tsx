@@ -1,5 +1,5 @@
 import ProfileForm from "@/components/ProfileForm";
-import { getUser } from "@/lib/actions";
+import { getUser } from "@/lib/actions/userActions";
 import { auth } from "@/lib/auth";
 import { formatDate } from "@/lib/utils";
 import { notFound } from "next/navigation";

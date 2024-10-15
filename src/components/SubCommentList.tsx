@@ -1,10 +1,10 @@
-import { getSubComments } from "@/lib/actions";
 import { nextPageConfirmation } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import SubCommentCard from "./SubCommentCard";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import SubCommentForm from "./SubCommentForm";
+import { getSubComments } from "@/lib/actions/subCommentActions";
 
 type Props = {
   comment: CommentType;

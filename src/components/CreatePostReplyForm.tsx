@@ -2,10 +2,10 @@
 
 import { useFormState } from "react-dom";
 import FormStatusButton from "./FormStatusSubmitButton";
-import { createSubPost } from "@/lib/actions";
 import { useEffect } from "react";
 import FormStateError from "./FormStateError";
 import { useRouter } from "next/navigation";
+import { createSubPost } from "@/lib/actions/subPostActions";
 
 type Props = {
   authorId: string;

@@ -2,11 +2,11 @@
 
 import { useFormState } from "react-dom";
 import Link from "next/link";
-import { credentialsLogin, handleGitHubLogin } from "@/lib/actions";
 import FormStatusButton from "@/components/FormStatusSubmitButton";
 import FormStateError from "@/components/FormStateError";
 import { useSearchParams } from "next/navigation";
 import GithubLoginForm from "@/components/GithubLoginForm";
+import { credentialsLogin } from "@/lib/actions/authActions";
 
 const LoginForm = () => {
   const [state, formAction] = useFormState(credentialsLogin, null);

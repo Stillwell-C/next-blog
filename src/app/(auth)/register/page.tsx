@@ -1,6 +1,5 @@
 "use client";
 
-import { handleGitHubLogin, registerUser } from "@/lib/actions";
 import { useFormState } from "react-dom";
 import { useEffect } from "react";
 import Link from "next/link";
@@ -8,6 +7,7 @@ import { useRouter } from "next/navigation";
 import FormStatusButton from "@/components/FormStatusSubmitButton";
 import FormStateError from "@/components/FormStateError";
 import GithubLoginForm from "@/components/GithubLoginForm";
+import { registerUser } from "@/lib/actions/authActions";
 
 const RegisterForm = () => {
   const router = useRouter();

@@ -3,10 +3,10 @@
 import { Session } from "next-auth";
 import Link from "next/link";
 import RedirectLink from "./RedirectLink";
-import { handleLogout } from "@/lib/actions";
 import NavbarUserInfo from "./NavbarUserInfo";
 import SearchForm from "./SearchForm";
 import ToggleThemes from "./ToggleThemes";
+import { handleLogout } from "@/lib/actions/authActions";
 
 type Props = {
   session: Session | null;

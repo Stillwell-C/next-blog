@@ -6,9 +6,9 @@ import NavbarUserInfo from "./NavbarUserInfo";
 import Link from "next/link";
 import SearchForm from "./SearchForm";
 import RedirectLink from "./RedirectLink";
-import { handleLogout } from "@/lib/actions";
 import { Session } from "next-auth";
 import ToggleThemes from "./ToggleThemes";
+import { handleLogout } from "@/lib/actions/authActions";
 
 type Props = { session: Session | null };
 

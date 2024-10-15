@@ -1,6 +1,6 @@
-import { countSubPosts, getSubPosts } from "@/lib/actions";
 import React from "react";
 import SubPostsList from "./SubPostsList";
+import { countSubPosts, getSubPosts } from "@/lib/actions/subPostActions";
 
 type Props = {
   postId: string;

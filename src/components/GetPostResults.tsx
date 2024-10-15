@@ -1,5 +1,5 @@
+import { getPosts } from "@/lib/actions/postActions";
 import PaginatedPostResults from "./PaginatedPostResults";
-import { getPosts } from "@/lib/actions";
 
 type Props = {
   page?: string;

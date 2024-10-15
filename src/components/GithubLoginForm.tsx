@@ -1,6 +1,5 @@
-import { handleGitHubLogin } from "@/lib/actions";
+import { handleGitHubLogin } from "@/lib/actions/authActions";
 import { useSearchParams } from "next/navigation";
-import React from "react";
 
 const GithubLoginForm = () => {
   const searchParams = useSearchParams();

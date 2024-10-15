@@ -1,4 +1,4 @@
-import { getComments } from "@/lib/actions";
+import { getComments } from "@/lib/actions/commentActions";
 import PostCommentsList from "./PostCommentsList";
 
 type Props = {

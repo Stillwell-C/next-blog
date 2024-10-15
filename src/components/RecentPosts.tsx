@@ -1,7 +1,7 @@
 import React from "react";
-import { getPosts } from "@/lib/actions";
 import LinkButton from "./LinkButton";
 import PostResults from "./PostResults";
+import { getPosts } from "@/lib/actions/postActions";
 
 const RecentPosts = async () => {
   const postData = await getPosts({ take: 5 });

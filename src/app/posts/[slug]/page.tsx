@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import PostPageSkeleton from "@/components/PostPageSkeleton";
 import PostPage from "@/components/PostPage";
-import { getPost } from "@/lib/actions";
+import { getPost } from "@/lib/actions/postActions";
 
 type Props = {
   params: {

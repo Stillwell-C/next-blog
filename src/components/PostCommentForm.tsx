@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from "react";
 import FormStateError from "./FormStateError";
 import FormStatusButton from "./FormStatusSubmitButton";
-import { createComment } from "@/lib/actions";
 import { useFormState } from "react-dom";
 import RedirectLink from "./RedirectLink";
+import { createComment } from "@/lib/actions/commentActions";
 
 type Props = {
   postId: string;

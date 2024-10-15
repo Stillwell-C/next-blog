@@ -1,10 +1,10 @@
 "use client";
 
-import { getSubPosts } from "@/lib/actions";
 import { nextPageConfirmation } from "@/lib/utils";
 import { useState } from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 import SubPostCard from "./SubPostCard";
+import { getSubPosts } from "@/lib/actions/subPostActions";
 
 type Props = {
   initialSubPosts:

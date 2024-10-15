@@ -1,4 +1,3 @@
-import { getPost } from "@/lib/actions";
 import { auth } from "@/lib/auth";
 import { formatDate, resizeCloudinaryImg } from "@/lib/utils";
 import Image from "next/image";
@@ -9,6 +8,7 @@ import LinkButton from "./LinkButton";
 import SubPosts from "./SubPosts";
 import PostCommentForm from "./PostCommentForm";
 import PostComments from "./PostComments";
+import { getPost } from "@/lib/actions/postActions";
 
 type Props = {
   slug: string;

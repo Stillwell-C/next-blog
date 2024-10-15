@@ -1,8 +1,8 @@
-import { getPost } from "@/lib/actions";
 import { auth } from "@/lib/auth";
 import EditPostForm from "@/components/EditPostForm";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getPost } from "@/lib/actions/postActions";
 
 type Props = {
   params: {
