@@ -30,3 +30,7 @@ export const resizeCloudinaryImg = (
   const dimensions = height ? `w_${width},h_${height}` : `w_${width}`;
   return splitUrl.join(`upload/${dimensions}`);
 };
+
+export const isImageFile = (file: File) => {
+  return file.type.startsWith("image/");
+};
