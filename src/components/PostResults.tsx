@@ -9,7 +9,7 @@ type Props = {
 const PostList = ({ posts, pageTitle = "Posts" }: Props) => {
   return (
     <div className='w-full flex flex-col gap-6 items-center'>
-      <h2 className='text-2xl'>{pageTitle}</h2>
+      <h2 className='text-3xl font-semibold'>{pageTitle}</h2>
       <div className='w-full p-4 flex flex-col gap-4'>
         {posts?.map((post, index) => (
           <PostCard post={post} index={index} key={post?.id} />
