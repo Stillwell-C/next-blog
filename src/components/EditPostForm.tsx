@@ -28,7 +28,7 @@ const EditPostForm = ({ editorId, post }: Props) => {
     }
 
     if (deleteState?.success) {
-      router.push("/posts");
+      router.push("/");
     }
   }, [editState, deleteState]);
 
