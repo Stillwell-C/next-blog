@@ -363,3 +363,116 @@ export const deletePost = async (
     return { error: true, errorMsg: "에로가 발생했습니다" };
   }
 };
+
+export const searchPosts = async ({
+  searchQuery,
+  take = 10,
+  page = 1,
+}: {
+  searchQuery: string;
+  take?: number;
+  page?: number;
+}) => {
+  const skip = page * take - take;
+
+  try {
+    const postCount = await prisma.post.count({
+      where: {
+        OR: [
+          {
+            author: {
+              username: {
+                contains: searchQuery,
+                mode: "insensitive",
+              },
+            },
+          },
+          {
+            title: {
+              contains: searchQuery,
+              mode: "insensitive",
+            },
+          },
+          {
+            subTitle: {
+              contains: searchQuery,
+              mode: "insensitive",
+            },
+          },
+          {
+            content: {
+              contains: searchQuery,
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+    });
+
+    const posts = await prisma.post.findMany({
+      where: {
+        OR: [
+          {
+            author: {
+              username: {
+                contains: searchQuery,
+                mode: "insensitive",
+              },
+            },
+          },
+          {
+            title: {
+              contains: searchQuery,
+              mode: "insensitive",
+            },
+          },
+          {
+            subTitle: {
+              contains: searchQuery,
+              mode: "insensitive",
+            },
+          },
+          {
+            content: {
+              contains: searchQuery,
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      select: {
+        id: true,
+        title: true,
+        subTitle: true,
+        imgUrl: true,
+        authorId: true,
+        editorId: true,
+        createdAt: true,
+        updatedAt: true,
+        author: {
+          select: {
+            username: true,
+          },
+        },
+      },
+      take,
+      skip,
+    });
+
+    const totalPages = Math.ceil(postCount / take);
+
+    return { posts, currentPage: page, totalCount: postCount, totalPages };
+  } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - searchPosts: ", err);
+    }
+
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    }
+    throw new Error("에로가 발생했습니다");
+  }
+};
