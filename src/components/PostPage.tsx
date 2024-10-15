@@ -72,12 +72,15 @@ const PostPage = async ({ slug }: Props) => {
             {paragraph}
           </p>
         ))}
-        {session?.user?.admin && (
-          <div className='flex gap-4 justify-end'>
+
+        <div className='flex gap-4 justify-end'>
+          {session?.user && (
             <LinkButton href={replyHref} linkText='답글 쓰기' />
+          )}
+          {session?.user?.admin && (
             <LinkButton href={editHref} linkText='수정' />
-          </div>
-        )}
+          )}
+        </div>
       </section>
       <SubPosts postId={post.id} />
       <PostCommentForm postId={post?.id} authorId={session?.user?.id} />
