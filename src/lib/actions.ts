@@ -5,7 +5,7 @@ import { prisma } from "./prisma";
 import bcrypt from "bcryptjs";
 import { CredentialsSignin } from "next-auth";
 import { isRedirectError } from "next/dist/client/components/redirect";
-import { formatPostContent } from "./utils";
+import { formatPostContent, isImageFile } from "./utils";
 import { uploadFileToCloudinaryFromAction } from "./cloudinaryUtils";
 import { revalidatePath } from "next/cache";
 
@@ -182,6 +182,15 @@ export const updateUserImg = async (
     }
 
     const imageFormData = imageUpload as File;
+    const imageCheck = isImageFile(imageFormData);
+
+    if (!imageCheck) {
+      return {
+        error: true,
+        errorMsg: "에로가 발생했습니다. 파일 형식은 이미지 파일이어야 합니다.",
+      };
+    }
+
     const res = await uploadFileToCloudinaryFromAction(imageFormData);
 
     if (!res.error && res.imgUrl) {
@@ -242,6 +251,16 @@ export const createPost = async (
   let imgUrl = null;
 
   const imageFormData = imageUpload as File;
+
+  const imageCheck = isImageFile(imageFormData);
+
+  if (!imageCheck) {
+    return {
+      error: true,
+      errorMsg: "에로가 발생했습니다. 파일 형식은 이미지 파일이어야 합니다.",
+    };
+  }
+
   if (imageFormData.size > 0) {
     try {
       const res = await uploadFileToCloudinaryFromAction(imageFormData);
@@ -401,6 +420,16 @@ export const editPost = async (
     let imgUrl = (existingImgUrl as string) || null;
 
     const imageFormData = imageUpload as File;
+
+    const imageCheck = isImageFile(imageFormData);
+
+    if (!imageCheck) {
+      return {
+        error: true,
+        errorMsg: "에로가 발생했습니다. 파일 형식은 이미지 파일이어야 합니다.",
+      };
+    }
+
     if (imageFormData.size > 0) {
       try {
         const res = await uploadFileToCloudinaryFromAction(imageFormData);
