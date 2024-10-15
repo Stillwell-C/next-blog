@@ -166,7 +166,7 @@ const PostForm = ({
         </div>
         <div className='flex flex-col'>
           <label htmlFor='content' className='ml-2 text-xs'>
-            포스팅 내용:
+            포스트 내용:
           </label>
           <textarea
             placeholder='내용'

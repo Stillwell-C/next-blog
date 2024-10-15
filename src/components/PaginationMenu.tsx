@@ -53,7 +53,7 @@ const PaginationMenu = ({ totalPages, currentPage }: Props) => {
   }
 
   return (
-    <nav aria-label='포스팅 결과 페이지 메뉴' className='flex gap-2 mt-10'>
+    <nav aria-label='포스트 결과 페이지 메뉴' className='flex gap-2 mt-10'>
       {menuButtons}
     </nav>
   );
