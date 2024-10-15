@@ -43,6 +43,14 @@ const page = async () => {
           </p>
           <p>{session.user.username}</p>
         </div>
+        {user?.role && (
+          <div className='flex gap-4 mb-2'>
+            <p className='font-medium text-gray-600 dark:text-gray-500'>
+              계정 등급:
+            </p>
+            <p>{user.role.slice(0, 1) + user.role.slice(1).toLowerCase()}</p>
+          </div>
+        )}
         {user?.createdAt && (
           <div className='flex gap-4 mb-2'>
             <p className='font-medium text-gray-600 dark:text-gray-500'>
