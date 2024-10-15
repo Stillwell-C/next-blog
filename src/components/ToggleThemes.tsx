@@ -6,21 +6,19 @@ import { FiMoon, FiSun } from "react-icons/fi";
 const ToggleThemes = () => {
   const { setTheme, resolvedTheme } = useTheme();
 
-  if (resolvedTheme === "light") {
-    return (
-      <button onClick={() => setTheme("dark")}>
-        <FiMoon size={20} />
-      </button>
-    );
-  }
+  const handleSetTheme = () => {
+    if (resolvedTheme === "light") {
+      setTheme("dark");
+    } else if (resolvedTheme === "dark") {
+      setTheme("light");
+    }
+  };
 
-  if (resolvedTheme === "dark") {
-    return (
-      <button onClick={() => setTheme("light")}>
-        <FiSun size={20} />
-      </button>
-    );
-  }
+  return (
+    <button onClick={handleSetTheme}>
+      {resolvedTheme === "light" ? <FiMoon size={20} /> : <FiSun size={20} />}
+    </button>
+  );
 };
 
 export default ToggleThemes;
