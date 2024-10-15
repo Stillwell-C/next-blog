@@ -630,6 +630,8 @@ export const createSubPost = async (
       },
     });
 
+    revalidatePath(`/posts/${postId}`);
+
     return { success: true };
   } catch (err) {
     if (process.env.NODE_ENV !== "production") {
@@ -763,6 +765,8 @@ export const createComment = async (
       },
     });
 
+    revalidatePath(`/posts/${postId}`);
+
     return { success: true };
   } catch (err) {
     if (process.env.NODE_ENV !== "production") {
@@ -888,6 +892,8 @@ export const createSubComment = async (
         content: content,
       },
     });
+
+    revalidatePath(`/posts/${postId}`);
 
     return { success: true };
   } catch (err) {
