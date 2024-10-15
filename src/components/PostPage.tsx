@@ -2,13 +2,14 @@ import { auth } from "@/lib/auth";
 import { formatDate, resizeCloudinaryImg } from "@/lib/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 import { RiBook2Fill } from "react-icons/ri";
 import LinkButton from "./LinkButton";
 import SubPosts from "./SubPosts";
 import PostCommentForm from "./PostCommentForm";
 import PostComments from "./PostComments";
 import { getPost } from "@/lib/actions/postActions";
+import PostCommentsListSkeleton from "./PostCommentsListSkeleton";
 
 type Props = {
   slug: string;
@@ -84,7 +85,9 @@ const PostPage = async ({ slug }: Props) => {
       </section>
       <SubPosts postId={post.id} />
       <PostCommentForm postId={post?.id} authorId={session?.user?.id} />
-      <PostComments postId={post?.id} />
+      <Suspense fallback={<PostCommentsListSkeleton />}>
+        <PostComments postId={post?.id} />
+      </Suspense>
     </div>
   );
 };
