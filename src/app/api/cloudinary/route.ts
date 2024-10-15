@@ -37,6 +37,8 @@ export const POST = async (req: NextRequest) => {
       return NextResponse.json({ message: "Upload failed", error: true });
     }
   } catch (err) {
-    console.log(err);
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - API - Cloudinary/route: ", err);
+    }
   }
 };

@@ -47,7 +47,10 @@ export const GET = async (req: NextRequest) => {
       { status: 200 }
     );
   } catch (err) {
-    console.log(err);
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - API - SubComments/route: ", err);
+    }
+
     return NextResponse.json(
       { message: "에로가 발생했습니다" },
       { status: 400 }
