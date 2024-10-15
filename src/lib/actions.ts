@@ -472,7 +472,10 @@ export const editPost = async (
           return { error: true, errorMsg: "이미지 업로드 에로가 발생했습니다" };
         }
       } catch (err) {
-        console.log(err);
+        if (process.env.NODE_ENV !== "production") {
+          console.error("Error - editPost - imgUpload: ", err);
+        }
+
         return { error: true, errorMsg: "이미지 업로드 에로가 발생했습니다" };
       }
     }

@@ -14,8 +14,10 @@ export const uploadFileToCloudinary = async (file: File | Blob) => {
 
     return data;
   } catch (err) {
-    console.log(err);
-    throw new Error();
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    }
+    throw new Error("에로가 발생했습니다");
   }
 };
 
@@ -40,6 +42,9 @@ export const uploadFileToCloudinaryFromAction = async (file: File | Blob) => {
       return { message: "Upload failed", error: true };
     }
   } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Error - utils - uploadFileToCloudinaryFromAction:", err);
+    }
     return { message: "Upload failed", error: true };
   }
 };

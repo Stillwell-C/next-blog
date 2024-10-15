@@ -39,7 +39,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     async signIn({ user, account, profile }) {
-      //console.log(user, account, profile);
       if (account?.provider === "github") {
         try {
           if (!profile) return false;
@@ -71,7 +70,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             user.name = newUser.username;
           }
         } catch (err) {
-          console.log(err);
+          if (process.env.NODE_ENV !== "production") {
+            console.error("Error - updateUserImg: ", err);
+          }
           return false;
         }
       }

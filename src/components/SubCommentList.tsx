@@ -27,8 +27,6 @@ const SubCommentList = ({ comment }: Props) => {
         page: subCommentsPage,
       });
 
-      console.log(additionalSubComments);
-
       if (additionalSubComments?.subComments.length) {
         setSubComments((prev) => [
           ...prev,
@@ -46,7 +44,6 @@ const SubCommentList = ({ comment }: Props) => {
       setSubCommentsPage((prev) => prev + 1);
       setLoading(false);
     } catch (err) {
-      console.log(err);
       setLoading(false);
     }
   };

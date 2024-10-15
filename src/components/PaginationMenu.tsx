@@ -13,8 +13,6 @@ const PaginationMenu = ({ totalPages, currentPage }: Props) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  console.log(currentPage);
-
   const pageUrlGenerator = useCallback(
     (page: number) => {
       const params = new URLSearchParams(searchParams.toString());
