@@ -163,13 +163,14 @@ export const credentialsLogin = async (
 
 export const getUser = async (userId: string) => {
   try {
-    const user = await prisma.user.findFirst({
+    const user = await prisma.user.findUnique({
       where: { id: userId },
       select: {
         username: true,
         imgUrl: true,
         updatedAt: true,
         createdAt: true,
+        role: true,
       },
     });
 
@@ -241,7 +242,7 @@ export const createPost = async (
   }
 
   if (!authorId) {
-    return { error: true, errorMsg: "인증 자격 증명이 없습니다." };
+    return { error: true, errorMsg: "포스트를 작성하려면 로그인해야 합니다." };
   }
 
   if (
@@ -263,6 +264,17 @@ export const createPost = async (
 
   if (subTitle.length > 300) {
     return { error: true, errorMsg: "글  부제는 300자 이하여야 합니다." };
+  }
+
+  const user = await getUser(authorId);
+  if (!user) {
+    return { error: true, errorMsg: "포스트를 작성하려면 로그인해야 합니다." };
+  }
+  if (user?.role === "ADMIN") {
+    return {
+      error: true,
+      errorMsg: "Admin 등급인 계정만 포스트를 작성할 수 있습니다.",
+    };
   }
 
   let imgUrl = null;
@@ -424,7 +436,10 @@ export const editPost = async (
     }
 
     if (!editorId) {
-      return { error: true, errorMsg: "인증 자격 증명이 없습니다." };
+      return {
+        error: true,
+        errorMsg: "포스트를 수정하려면 로그인해야 합니다.",
+      };
     }
 
     if (
@@ -447,6 +462,14 @@ export const editPost = async (
 
     if (subTitle.length > 300) {
       return { error: true, errorMsg: "글  부제는 300자 이하여야 합니다." };
+    }
+
+    const user = await getUser(editorId);
+    if (user?.role === "ADMIN") {
+      return {
+        error: true,
+        errorMsg: "Admin 등급인 계정만 포스트를 수정할 수 있습니다.",
+      };
     }
 
     let imgUrl = (existingImgUrl as string) || null;
@@ -522,16 +545,33 @@ export const deletePost = async (
     }
 
     if (!editorId) {
-      return { error: true, errorMsg: "인증 자격 증명이 없습니다." };
+      return {
+        error: true,
+        errorMsg: "포스트를 삭제하려면 로그인해야 합니다.",
+      };
     }
 
-    const data = {
-      id: postId as string,
-    };
+    if (typeof postId !== "string" || typeof editorId !== "string") {
+      return { error: true, errorMsg: "비정상적인 데이터가 전달되었습니다." };
+    }
+
+    const user = await getUser(editorId);
+    if (!user) {
+      return {
+        error: true,
+        errorMsg: "포스트를 삭제하려면 로그인해야 합니다.",
+      };
+    }
+    if (user?.role === "ADMIN") {
+      return {
+        error: true,
+        errorMsg: "Admin 등급인 계정만 포스트를 삭제할 수 있습니다.",
+      };
+    }
 
     await prisma.post.delete({
       where: {
-        id: data.id,
+        id: postId,
       },
     });
 
@@ -567,11 +607,16 @@ export const createSubPost = async (
   }
 
   if (!authorId) {
-    return { error: true, errorMsg: "인증 자격 증명이 없습니다." };
+    return { error: true, errorMsg: "답글을 작성하려면 로그인해야 합니다." };
   }
 
   if (content.length > 1500) {
     return { error: true, errorMsg: "답글은 1500자 이하여야 합니다." };
+  }
+
+  const user = await getUser(authorId);
+  if (!user) {
+    return { error: true, errorMsg: "답글을 작성하려면 로그인해야 합니다." };
   }
 
   const parsedContent = formatPostContent(content as string);
@@ -584,8 +629,6 @@ export const createSubPost = async (
         postId,
       },
     });
-
-    revalidatePath(`/posts/${postId}`);
 
     return { success: true };
   } catch (err) {
@@ -707,6 +750,11 @@ export const createComment = async (
       return { error: true, errorMsg: "댓글은 500자 이하여야 합니다." };
     }
 
+    const user = await getUser(authorId);
+    if (!user) {
+      return { error: true, errorMsg: "댓글을 작성하려면 로그인해야 합니다." };
+    }
+
     await prisma.comment.create({
       data: {
         postId: postId,
@@ -823,6 +871,14 @@ export const createSubComment = async (
 
     if (content.length > 500) {
       return { error: true, errorMsg: "대댓글은 500자 이하여야 합니다." };
+    }
+
+    const user = await getUser(authorId);
+    if (!user) {
+      return {
+        error: true,
+        errorMsg: "대댓글을 작성하려면 로그인해야 합니다.",
+      };
     }
 
     await prisma.subComment.create({
