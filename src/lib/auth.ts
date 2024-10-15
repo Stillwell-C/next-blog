@@ -29,6 +29,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             role: user.role,
           };
         } catch (err) {
+          if (process.env.NODE_ENV !== "production") {
+            console.error("Error - updateUserImg: ", err);
+          }
           return null;
         }
       },
