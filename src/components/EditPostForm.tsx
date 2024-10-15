@@ -33,7 +33,7 @@ const EditPostForm = ({ editorId, post }: Props) => {
   }, [editState, deleteState]);
 
   return (
-    <div>
+    <section>
       <PostForm
         editorId={editorId}
         post={post}
@@ -47,7 +47,7 @@ const EditPostForm = ({ editorId, post }: Props) => {
         formAction={deleteFormAction}
         formState={deleteState}
       />
-    </div>
+    </section>
   );
 };
 

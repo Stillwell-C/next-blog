@@ -60,7 +60,7 @@ const SubPostsList = ({ initialSubPosts, postId, subPostCount }: Props) => {
   const chevron = hideSubPosts ? <FaChevronRight /> : <FaChevronDown />;
 
   return (
-    <div>
+    <section>
       <button
         aria-label='답글 표시함'
         className='flex items-center gap-2'
@@ -88,7 +88,7 @@ const SubPostsList = ({ initialSubPosts, postId, subPostCount }: Props) => {
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

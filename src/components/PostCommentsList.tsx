@@ -55,7 +55,7 @@ const PostCommentsList = ({ initialComments, postId }: Props) => {
   };
 
   const commentDisplay = (
-    <div>
+    <section>
       <div className='flex flex-col gap-4'>
         {comments.map((comment) => (
           <PostCommentCard comment={comment} key={comment.id} />
@@ -70,7 +70,7 @@ const PostCommentsList = ({ initialComments, postId }: Props) => {
           댓글 더 보기
         </button>
       )}
-    </div>
+    </section>
   );
 
   return commentDisplay;

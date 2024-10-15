@@ -31,26 +31,28 @@ const PostCommentForm = ({ postId, authorId }: Props) => {
   );
 
   const commentForm = (
-    <form action={formAction} className='flex flex-col gap-4'>
-      <h4 className='text-xl'>댓글 쓰기</h4>
-      <input
-        className='border border-black dark:border-slate-700 rounded-md p-2'
-        name='content'
-        value={commentContent}
-        onChange={(e) => setCommentContent(e.target.value)}
-        maxLength={500}
-        autoComplete='off'
-      />
-      <input type='text' name='authorId' value={authorId} hidden readOnly />
-      <input type='text' name='postId' value={postId} hidden readOnly />
-      <FormStateError formState={state} />
-      <div className='flex justify-end'>
-        <FormStatusButton
-          buttonText='제출'
-          disable={commentContent.length < 1}
+    <section>
+      <form action={formAction} className='flex flex-col gap-4'>
+        <h4 className='text-xl'>댓글 쓰기</h4>
+        <input
+          className='border border-black dark:border-slate-700 rounded-md p-2'
+          name='content'
+          value={commentContent}
+          onChange={(e) => setCommentContent(e.target.value)}
+          maxLength={500}
+          autoComplete='off'
         />
-      </div>
-    </form>
+        <input type='text' name='authorId' value={authorId} hidden readOnly />
+        <input type='text' name='postId' value={postId} hidden readOnly />
+        <FormStateError formState={state} />
+        <div className='flex justify-end'>
+          <FormStatusButton
+            buttonText='제출'
+            disable={commentContent.length < 1}
+          />
+        </div>
+      </form>
+    </section>
   );
 
   return <div className='my-10'>{authorId ? commentForm : loginMessage}</div>;

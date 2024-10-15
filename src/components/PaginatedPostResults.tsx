@@ -10,12 +10,12 @@ type Props = {
 
 const PaginatedPostResults = ({ postData, page, pageTitle }: Props) => {
   return (
-    <div className='mx-auto max-w-3xl h-full flex flex-col items-center'>
+    <section className='mx-auto max-w-3xl h-full flex flex-col items-center'>
       <PostResults posts={postData.posts} pageTitle={pageTitle} />
       {postData.totalPages > 1 && (
         <PaginationMenu totalPages={postData.totalPages} currentPage={page} />
       )}
-    </div>
+    </section>
   );
 };
 

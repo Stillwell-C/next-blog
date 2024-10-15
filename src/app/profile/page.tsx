@@ -26,7 +26,7 @@ const page = async () => {
   const user = await getUser(session?.user?.id);
 
   return (
-    <div className='mx-auto max-w-3xl h-full flex flex-col items-center p-6'>
+    <section className='mx-auto max-w-3xl h-full flex flex-col items-center p-6'>
       <h2 className='text-center text-2xl font-semibold'>Profile</h2>
 
       <div className='border border-gray-300 rounded-lg shadow-md p-6 mt-10 w-full text-gray-700 dark:text-gray-400'>
@@ -68,7 +68,7 @@ const page = async () => {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 
