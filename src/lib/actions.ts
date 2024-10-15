@@ -770,8 +770,6 @@ export const createSubComment = async (
       },
     });
 
-    revalidatePath(`/posts/${postId}`);
-
     return { success: true };
   } catch (err) {
     if (err instanceof Error) {
