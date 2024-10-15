@@ -24,7 +24,7 @@ const NavbarMobile = ({ session }: Props) => {
   );
   const signOutButton = (
     <form action={handleLogout}>
-      <button onClick={closeNavBar}>Sign Out</button>
+      <button onClick={closeNavBar}>로그아웃</button>
     </form>
   );
 
@@ -49,11 +49,11 @@ const NavbarMobile = ({ session }: Props) => {
           )}
           <div>{!session ? signInButton : signOutButton}</div>
           <Link onClick={closeNavBar} href='/posts'>
-            Posts
+            포스트
           </Link>
           {session?.user.admin && (
             <Link onClick={closeNavBar} href='/posts/create'>
-              Create Post
+              포스트 작성
             </Link>
           )}
           <SearchForm closeNavBar={closeNavBar} />

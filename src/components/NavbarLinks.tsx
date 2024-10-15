@@ -20,14 +20,14 @@ const NavbarLinks = ({ session }: Props) => {
   );
   const signOutButton = (
     <form action={handleLogout}>
-      <button>Sign Out</button>
+      <button>로그아웃</button>
     </form>
   );
 
   return (
     <nav className='hidden md:flex items-center justify-end gap-6 text-xl'>
-      <Link href='/posts'>Posts</Link>
-      {session?.user.admin && <Link href='/posts/create'>Create Post</Link>}
+      <Link href='/posts'>포스트</Link>
+      {session?.user.admin && <Link href='/posts/create'>포스트 작성</Link>}
       <div>{!session ? signInButton : signOutButton}</div>
       {session && <NavbarUserInfo session={session} />}
       <SearchForm />
