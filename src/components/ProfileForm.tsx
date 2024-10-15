@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import ProfileImage from "./ProfileImage";
-import { updateUserImg } from "@/lib/actions";
 import { useFormState } from "react-dom";
 import FormStateError from "./FormStateError";
 import FormStatusSpinner from "./FormStatusSpinner";
 import { useSession } from "next-auth/react";
+import { updateUserImg } from "@/lib/actions/userActions";
 
 type Props = {
   imgUrl?: string | null;
