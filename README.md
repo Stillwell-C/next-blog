@@ -9,10 +9,10 @@
 ## 기술 스택
 
 - 프론트엔드: Next.js, React, Tailwind CSS
-- 백엔드: Next.js API Routes, Next.js Server Actions, Prisma, PostgreSQL, Supabase
+- 백엔드: Next.js API Routes, Next.js Server Actions, Prisma, PostgreSQL, Supabase, Cloudinary
 - 인증: NextAuth, Bcrypt
 - 배포: Vercel
-- 기타: Cloudinary, Next-Themes
+- 기타: Next-Themes
 
 ## 프로젝트 실행 방법
 
