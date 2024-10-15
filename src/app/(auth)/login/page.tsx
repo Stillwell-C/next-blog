@@ -6,7 +6,7 @@ import FormStatusButton from "@/components/FormStatusSubmitButton";
 import FormStateError from "@/components/FormStateError";
 import { useSearchParams } from "next/navigation";
 import GithubLoginForm from "@/components/GithubLoginForm";
-import { credentialsLogin } from "@/lib/actions/authActions";
+import { credentialsLogin } from "@/lib/actions";
 
 const LoginForm = () => {
   const [state, formAction] = useFormState(credentialsLogin, null);

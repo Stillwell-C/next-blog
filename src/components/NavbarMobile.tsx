@@ -8,7 +8,7 @@ import SearchForm from "./SearchForm";
 import RedirectLink from "./RedirectLink";
 import { Session } from "next-auth";
 import ToggleThemes from "./ToggleThemes";
-import { handleLogout } from "@/lib/actions/authActions";
+import { handleLogout } from "@/lib/actions";
 
 type Props = { session: Session | null };
 

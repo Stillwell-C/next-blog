@@ -6,7 +6,7 @@ import RedirectLink from "./RedirectLink";
 import NavbarUserInfo from "./NavbarUserInfo";
 import SearchForm from "./SearchForm";
 import ToggleThemes from "./ToggleThemes";
-import { handleLogout } from "@/lib/actions/authActions";
+import { handleLogout } from "@/lib/actions";
 
 type Props = {
   session: Session | null;

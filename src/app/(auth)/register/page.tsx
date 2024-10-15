@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import FormStatusButton from "@/components/FormStatusSubmitButton";
 import FormStateError from "@/components/FormStateError";
 import GithubLoginForm from "@/components/GithubLoginForm";
-import { registerUser } from "@/lib/actions/authActions";
+import { registerUser } from "@/lib/actions";
 
 const RegisterForm = () => {
   const router = useRouter();
