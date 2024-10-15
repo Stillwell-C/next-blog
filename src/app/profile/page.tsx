@@ -2,12 +2,25 @@ import ProfileForm from "@/components/ProfileForm";
 import { getUser } from "@/lib/actions";
 import { auth } from "@/lib/auth";
 import { formatDate } from "@/lib/utils";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
+
+export const generateMetadata = async () => {
+  const session = await auth();
+
+  if (session?.user.username) {
+    return {
+      title: `${session.user?.username} 프로필`,
+      description: `${session.user?.username} 프로필 페이지`,
+    };
+  }
+
+  return { title: "프로필 페이지", description: "프로필 페이지" };
+};
 
 const page = async () => {
   const session = await auth();
   if (!session?.user?.id) {
-    redirect("/");
+    notFound();
   }
 
   const user = await getUser(session?.user?.id);

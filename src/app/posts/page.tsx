@@ -8,6 +8,16 @@ type Props = {
   };
 };
 
+export const generateMetadata = async ({ searchParams: { page } }: Props) => {
+  if (!page) {
+    return { title: "포스트", description: "모든 포스트" };
+  }
+
+  if (page) {
+    return { title: `포스트 | 페이지 ${page}`, description: "모든 포스트" };
+  }
+};
+
 const PostsPage = async ({ searchParams: { page } }: Props) => {
   return (
     <Suspense fallback={<PostResultsSkeleton />}>
