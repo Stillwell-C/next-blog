@@ -6,7 +6,7 @@ type Props = {
   pageTitle?: string;
 };
 
-const PostList = ({ posts, pageTitle = "Posts" }: Props) => {
+const PostList = ({ posts, pageTitle = "포스트" }: Props) => {
   return (
     <div className='w-full flex flex-col gap-6 items-center'>
       <h2 className='text-3xl font-semibold'>{pageTitle}</h2>
