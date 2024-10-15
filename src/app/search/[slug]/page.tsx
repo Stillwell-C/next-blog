@@ -39,7 +39,11 @@ const page = async ({ params: { slug: searchTerm }, searchParams }: Props) => {
   });
 
   return (
-    <PostResults pageTitle='검색 결과' postData={searchResults} page={page} />
+    <PostResults
+      pageTitle={`${decodeURI(searchTerm)} 결과`}
+      postData={searchResults}
+      page={page}
+    />
   );
 };
 
