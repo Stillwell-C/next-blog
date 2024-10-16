@@ -56,11 +56,13 @@ const SubCommentList = ({ comment }: Props) => {
 
   return (
     <div>
-      <div className='my-4 flex flex-col gap-4'>
-        {subComments.map((subComment) => (
-          <SubCommentCard key={subComment.id} subComment={subComment} />
-        ))}
-      </div>
+      {subComments.length > 0 && (
+        <div className='my-4 flex flex-col gap-4'>
+          {subComments.map((subComment) => (
+            <SubCommentCard key={subComment.id} subComment={subComment} />
+          ))}
+        </div>
+      )}
       {subCommentsNextPage && (
         <div className='mb-2'>
           <button
@@ -75,7 +77,7 @@ const SubCommentList = ({ comment }: Props) => {
       {session?.user?.username?.length && (
         <div>
           <button
-            className='mb-2'
+            className='mx-2 mt-1 text-xs dark:text-gray-500'
             onClick={() => setDisplaySubCommentForm((prev) => !prev)}
           >
             대댓글 쓰기
