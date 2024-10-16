@@ -29,7 +29,7 @@ export const resizeImg = (url: string, width: number, height?: number) => {
   } else if (url.includes("nioxxawyqsujjzeptdan.supabase.co")) {
     const dimensions = height
       ? `width=${width}&height=${height}`
-      : `width=${width}${width}`;
+      : `width=${width}`;
     return url + "?" + dimensions;
   }
 
