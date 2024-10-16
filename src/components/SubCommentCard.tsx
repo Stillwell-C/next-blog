@@ -12,7 +12,9 @@ const SubCommentCard = ({ subComment }: Props) => {
         <ProfileImage imgUrl={subComment?.author?.imgUrl} />
       </div>
       <div className='flex flex-col flex-1'>
-        <span className='text-sm'>{subComment.author.username}</span>
+        <span className='text-sm text-gray-700 dark:text-gray-400'>
+          {subComment.author.username}
+        </span>
         <span>{subComment.content}</span>
       </div>
     </div>
