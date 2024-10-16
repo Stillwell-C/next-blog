@@ -2,6 +2,11 @@ import React, { Suspense } from "react";
 import PostPageSkeleton from "@/components/PostPageSkeleton";
 import PostPage from "@/components/PostPage";
 import { getPost } from "@/lib/actions/postActions";
+import { auth } from "@/lib/auth";
+import SubPosts from "@/components/SubPosts";
+import PostCommentForm from "@/components/PostCommentForm";
+import PostCommentsListSkeleton from "@/components/PostCommentsListSkeleton";
+import PostComments from "@/components/PostComments";
 
 type Props = {
   params: {
@@ -23,10 +28,19 @@ export const generateMetadata = async ({ params: { slug } }: Props) => {
 };
 
 const page = async ({ params: { slug } }: Props) => {
+  const session = await auth();
+
   return (
-    <Suspense fallback={<PostPageSkeleton />}>
-      <PostPage slug={slug} />
-    </Suspense>
+    <div className='mx-auto p-8 max-w-3xl'>
+      <Suspense fallback={<PostPageSkeleton />}>
+        <PostPage slug={slug} />
+      </Suspense>
+      <SubPosts postId={slug} />
+      <PostCommentForm postId={slug} authorId={session?.user?.id} />
+      <Suspense fallback={<PostCommentsListSkeleton />}>
+        <PostComments postId={slug} />
+      </Suspense>
+    </div>
   );
 };
 
