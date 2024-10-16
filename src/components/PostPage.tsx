@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth";
-import { formatDate, resizeCloudinaryImg } from "@/lib/utils";
+import { formatDate, resizeImg } from "@/lib/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { RiBook2Fill } from "react-icons/ri";
@@ -31,7 +31,7 @@ const PostPage = async ({ slug }: Props) => {
       {post?.imgUrl && (
         <div className='mx-auto mb-8 relative w-96 h-64 overflow-hidden'>
           <Image
-            src={resizeCloudinaryImg(post.imgUrl, 500)}
+            src={resizeImg(post.imgUrl, 500)}
             fill
             alt='게시물 이미지'
             className='w-full h-full rounded-lg'

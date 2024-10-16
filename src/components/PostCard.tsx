@@ -1,4 +1,4 @@
-import { formatDate, resizeCloudinaryImg } from "@/lib/utils";
+import { formatDate, resizeImg } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -22,7 +22,7 @@ const PostCard = ({ post, index }: Props) => {
       {post?.imgUrl && (
         <div className='md:w-1/3 h-full flex justify-center'>
           <Image
-            src={resizeCloudinaryImg(post?.imgUrl, 300)}
+            src={resizeImg(post?.imgUrl, 300)}
             height={150}
             width={300}
             alt='게시물 이미지'
