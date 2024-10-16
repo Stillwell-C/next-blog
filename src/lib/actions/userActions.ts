@@ -1,7 +1,7 @@
 "use server";
 
-import { uploadFileToCloudinaryFromAction } from "../cloudinaryUtils";
 import { prisma } from "../prisma";
+import { uploadImageToSupabase } from "../supabaseUtils";
 import { isImageFile } from "../utils";
 
 export const getUser = async (userId: string) => {
@@ -48,7 +48,7 @@ export const updateUserImg = async (
       };
     }
 
-    const res = await uploadFileToCloudinaryFromAction(imageFormData);
+    const res = await uploadImageToSupabase(imageFormData, "AVATARS");
 
     if (!res.error && res.imgUrl) {
       await prisma.user.update({

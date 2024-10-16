@@ -1,10 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { uploadFileToCloudinaryFromAction } from "../cloudinaryUtils";
 import { prisma } from "../prisma";
 import { formatPostContent, isImageFile } from "../utils";
 import { getUser } from "./userActions";
+import { uploadImageToSupabase } from "../supabaseUtils";
 
 export const createPost = async (
   prevState: FormStateType | null,
@@ -68,7 +68,7 @@ export const createPost = async (
     }
 
     try {
-      const res = await uploadFileToCloudinaryFromAction(imageFormData);
+      const res = await uploadImageToSupabase(imageFormData, "POSTS");
 
       if (!res.error && res.imgUrl) {
         imgUrl = res.imgUrl;
@@ -267,7 +267,7 @@ export const editPost = async (
       }
 
       try {
-        const res = await uploadFileToCloudinaryFromAction(imageFormData);
+        const res = await uploadImageToSupabase(imageFormData, "POSTS");
 
         if (!res.error && res.imgUrl) {
           imgUrl = res.imgUrl;
