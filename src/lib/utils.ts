@@ -21,14 +21,19 @@ export const nextPageConfirmation = (currentPage = 0, totalPages = 0) => {
   return totalPages > currentPage;
 };
 
-export const resizeCloudinaryImg = (
-  url: string,
-  width: number,
-  height?: number
-) => {
-  const splitUrl = url.split("upload");
-  const dimensions = height ? `w_${width},h_${height}` : `w_${width}`;
-  return splitUrl.join(`upload/${dimensions}`);
+export const resizeImg = (url: string, width: number, height?: number) => {
+  if (url.includes("res.cloudinary.com")) {
+    const splitUrl = url.split("upload");
+    const dimensions = height ? `w_${width},h_${height}` : `w_${width}`;
+    return splitUrl.join(`upload/${dimensions}`);
+  } else if (url.includes("nioxxawyqsujjzeptdan.supabase.co")) {
+    const dimensions = height
+      ? `width=${width}&height=${height}`
+      : `width=${width}${width}`;
+    return url + "?" + dimensions;
+  }
+
+  return url;
 };
 
 export const isImageFile = (file: File) => {
