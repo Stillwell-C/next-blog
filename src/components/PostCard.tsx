@@ -20,9 +20,9 @@ const PostCard = ({ post, index }: Props) => {
       } items-center`}
     >
       {post?.imgUrl && (
-        <div className='w-full md:w-1/3 h-full flex justify-center'>
+        <div className='w-full max-md:max-w-96 md:w-1/3 h-full flex justify-center'>
           <Image
-            src={resizeImg(post?.imgUrl, 300)}
+            src={resizeImg(post?.imgUrl, 500)}
             height={150}
             width={300}
             alt='게시물 이미지'
